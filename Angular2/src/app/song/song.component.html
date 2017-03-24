@@ -1,0 +1,12 @@
+<div style="padding-top: 25px; padding-right: 30px; padding-bottom: 50px; padding-left: 50px;">
+  <ul style="list-style: none">
+    <li *ngFor="let song of songs">
+      <span><img src="http://cache2.macintoshhowto.com/wp-content/uploads/2010/11/itunes.png" style="height: 25px; width: 25px"/></span> Song Name: <i><b>{{song.nameSong}}</b></i>     Song Duration: <i><b>{{song.durationSong}}</b></i>     Genere: <i><b>{{song.genere.genereName}}</b></i><br>
+      <audio controls>
+        <source src="app/Tracks/{{song.nameSong}}" type="audio/mpeg">
+      </audio>
+      <br>
+      <br>
+    </li>
+  </ul>
+</div>
