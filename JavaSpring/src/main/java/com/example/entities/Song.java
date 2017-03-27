@@ -21,7 +21,7 @@ public class Song {
 	@Column(name="NAMESONG", nullable = false)
 	private String nameSong;
 	@Column(name="DURATIONSONG", nullable = false)
-	private Integer durationSong;
+	private Float durationSong;
 	@JsonManagedReference
 	@ManyToOne(cascade=CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name="GENERE_ID")
@@ -34,7 +34,7 @@ public class Song {
 	
 	public Song() {}
 	
-	public Song(String nameSong, Integer durationSong, Genere genere) {
+	public Song(String nameSong, Float durationSong, Genere genere) {
 		super();
 		this.nameSong = nameSong;
 		this.durationSong = durationSong;
@@ -53,10 +53,10 @@ public class Song {
 	public void setNameSong(String nameSong) {
 		this.nameSong = nameSong;
 	}
-	public Integer getDurationSong() {
+	public Float getDurationSong() {
 		return durationSong;
 	}
-	public void setDurationSong(Integer durationSong) {
+	public void setDurationSong(Float durationSong) {
 		this.durationSong = durationSong;
 	}
 		

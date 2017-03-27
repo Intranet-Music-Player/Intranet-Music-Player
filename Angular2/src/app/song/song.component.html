@@ -10,3 +10,49 @@
     </li>
   </ul>
 </div>
+
+<div class="container">
+  <div class="row main">
+    <div class="main-login main-center">
+      <form #newSong="ngForm">
+      <div class="container">
+        <div class="form-group">
+          <label for="nameSong" class="cols-sm-2 control-label">Song Name</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+              <input type="text" class="form-control" name="nameSong" id="nameSong"  placeholder="Song Name .mp3" ngModel required/>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="form-group">
+          <label for="durationSong" class="cols-sm-2 control-label">Duration</label>
+          <div class="cols-sm-10">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+              <input type="text" class="form-control" name="durationSong" id="durationSong"  placeholder="Duration" ngModel required/>
+            </div>
+          </div>
+        </div>
+      </div>
+        <div class="container">
+          <div class="form-group">
+            <label for="genere" class="cols-sm-2 control-label">Genere
+            </label>
+            <div class="cols-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" name="genere" id="genere"  placeholder="Genere" ngModel required/>
+              </div>
+            </div>
+          </div>
+        </div>
+      <div class="form-group ">
+        <button class="btn btn-primary btn-lg btn-block login-button" (click)="addNew(newSong.value)">Add</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -144,7 +144,7 @@ public class MainController extends WebMvcConfigurerAdapter {
 				Song s = songRepository.findByNameSong(songName);
 				p.addSong(s);
 
-				int duration = 0;
+				Float duration = 0F;
 				for (int i = 0; i < p.getSongs().size(); i++) {
 					duration = duration + p.getSongs().get(i).getDurationSong();
 				}
@@ -156,27 +156,27 @@ public class MainController extends WebMvcConfigurerAdapter {
 		}
 	}
 	
-	@RequestMapping(path = "/song", method = RequestMethod.POST, produces="Application/json" , consumes= "Application/json")
+	@RequestMapping(path = "/newSong", method = RequestMethod.POST, produces="Application/json" , consumes= "Application/json")
 	public  @ResponseBody String addNewSong(@RequestBody SongRequest songRequest, @RequestBody AlbumRequest albumRequest, @RequestBody GenereRequest genereRequest) {	
-		if (  albumRepository.findByNameAlbum(albumRequest.getNameAlbum()) != null ){
+//		if (  albumRepository.findByNameAlbum(albumRequest.getNameAlbum()) != null ){
 			
-			Album album = albumRepository.findByNameAlbum(albumRequest.getNameAlbum());
-			Song song = songRepository.findByNameSong(songRequest.getNameSong());
+//			Album album = albumRepository.findByNameAlbum(albumRequest.getNameAlbum());
+//			Song song = songRepository.findByNameSong(songRequest.getNameSong());
 				
-				if ( album.getAlbumsongs().contains(song)) {
-					return "ALBUM CONTAINS THE SONG";
-				
-				} else {
+//				if ( album.getAlbumsongs().contains(song)) {
+//					return "ALBUM CONTAINS THE SONG";
+//				
+//				} else {
 					Genere owner = genereRepository.findByGenereName(genereRequest.getGenereName());
 					Song newSong = new Song(songRequest.getNameSong(), songRequest.getDurationSong(), owner);
-					album.addSong(newSong);
+//					album.addSong(newSong);
 					newSong.setGenere(owner);
 					songRepository.save(newSong);
 					return "SONG ADDED TO THE ALBUM";
-				}
-		} else {
-			return " ALBUM DOESN'T EXIST";
-		}
+//				}
+//		} else {
+//			return " ALBUM DOESN'T EXIST";
+//		}
 	}
 	
 	

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Song} from "../entities/entities";
+import {Song, Genres} from "../entities/entities";
 import {SongService} from "../services/song.service";
 
 @Component({
@@ -11,7 +11,6 @@ export class SongComponent implements OnInit {
 
   songs : Song[];
 
-  showSongs: boolean = false;
 
   constructor(private songService: SongService) { }
 
@@ -28,7 +27,24 @@ export class SongComponent implements OnInit {
     );
   }
 
-  onShowSongs() {
-    this.showSongs = !this.showSongs;
+  addNew(newSong : any) {
+    var songRequest : Song = {
+      songId : newSong.songId,
+      nameSong : newSong.nameSong,
+      durationSong : newSong.durationSong
+    };
+    var genereRequest : Genres = {
+      genereId : null,
+      genereName : newSong.genereName,
+      genereImage : null
+    };
+
+    this.songService.addNewSong(songRequest, genereRequest).subscribe(
+      err => {console.log(err);}
+    )
+
   }
+
+
+
 }

@@ -7,13 +7,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class SongRequest {
 	
 	private String nameSong;
-	private Integer durationSong;
+	private Float durationSong;
 	private Genere genere;
 	
 	
 	@JsonCreator
 	public SongRequest (@JsonProperty("namesong") String nameSong, 
-						@JsonProperty("durationsong") Integer durationSong, 
+						@JsonProperty("durationsong") Float durationSong, 
 						@JsonProperty("genere") Genere genere) {
 		
 		super();
@@ -32,10 +32,10 @@ public class SongRequest {
 	public void setNameSong(String nameSong) {
 		this.nameSong = nameSong;
 	}
-	public Integer getDurationSong() {
+	public Float getDurationSong() {
 		return durationSong;
 	}
-	public void setDurationSong(Integer durationSong) {
+	public void setDurationSong(Float durationSong) {
 		this.durationSong = durationSong;
 	}
 	public Genere getGenere() {

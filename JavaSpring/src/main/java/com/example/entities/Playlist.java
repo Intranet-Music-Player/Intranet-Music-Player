@@ -13,7 +13,7 @@ public class Playlist {
 	@Column(name="PLAYLIST_NAME", nullable = false)
 	private String name;
 	@Column(name="PLAYLIST_DURATION", nullable = false)
-	private int duration;
+	private Float duration;
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, targetEntity = Song.class)
 	@JoinTable  (name = "PLAYLIST_SONG",
 			joinColumns = { @JoinColumn (name = "PLAYLIST_ID")},
@@ -33,11 +33,11 @@ public class Playlist {
 	public void setPlaylistName(String playlistName) {
 		this.name = playlistName;
 	}
-	public int getPlaylistDuration() {
+	public Float getPlaylistDuration() {
 		return duration;
 	}
-	public void setPlaylistDuration(int playlistDuration) {
-		this.duration = playlistDuration;
+	public void setPlaylistDuration(Float duration) {
+		this.duration = duration;
 	}
 	public void addSong(Song song){
 		songs.add(song);

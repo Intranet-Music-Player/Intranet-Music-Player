@@ -29,5 +29,4 @@ export class Song {
   songId : number;
   nameSong : string;
   durationSong : number;
-
 }
