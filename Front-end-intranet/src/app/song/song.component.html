@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <h3>SONGS PAGE</h3>
+
+  <ul style=" list-style: none;">
+    <li *ngFor="let song of songs">
+      <h4> {{song.nameSong}} </h4>
+      <audio controls>
+        <source src="app/song/{{song.nameSong}}" type="audio/mpeg">
+      </audio>
+    </li>
+  </ul>
+
+
+  <div class="form">
+    <form #newSong="ngForm" class="login-form">
+      <input type="text" placeholder="songName" name="songName" ngModel required/>
+      <input type="text" placeholder="songDuration" name="songDuration" ngModel required/>
+      <input type="text" placeholder="genereName" name="genereName" ngModel required/>
+      
+      <button (click)="addNewSong(newSong.value)">login</button>
+    </form>
+  </div>
+
+
+
+</div>

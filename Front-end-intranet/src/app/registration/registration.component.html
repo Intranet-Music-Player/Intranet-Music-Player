@@ -1,0 +1,15 @@
+<div class="login-page">
+	<div class="form">
+		<form #register="ngForm" class="login-form">
+			<label>Name </label>
+			<input type="text" placeholder="Enter your name" name="username" ngModel required/>
+			<label>Email </label>
+			<input type="email" placeholder="Enter your email" name="email" ngModel required/>
+			<label>Username</label>
+			<input type="text" placeholder="Enter your username" name="userlogin" ngModel required/>
+			<label>password </label>
+			<input type="password" placeholder="Enter your password" name="password" ngModel required/>
+			<button (click)="registerNewUser(register.value)">register</button>
+		</form>
+	</div>
+</div>
