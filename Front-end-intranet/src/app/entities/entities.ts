@@ -1,5 +1,5 @@
 export class User {
-    
+
    userlogin :string ;
    password :string ;
    email : string ;
@@ -23,4 +23,5 @@ export class Song {
     songId : number;
     nameSong : string;
     durationSong : number;
+    genereN : string;
 } ;

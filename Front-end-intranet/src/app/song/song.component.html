@@ -1,26 +1,68 @@
-<div class="container-fluid">
-  <h3>SONGS PAGE</h3>
-
-  <ul style=" list-style: none;">
+<div style="padding-top: 75px; padding-right: 30px; padding-bottom: 50px; padding-left: 50px;">
+  <ul style="list-style: none">
     <li *ngFor="let song of songs">
-      <h4> {{song.nameSong}} </h4>
+      <span><img src="http://cache2.macintoshhowto.com/wp-content/uploads/2010/11/itunes.png" style="height: 25px; width: 25px"/></span> Song Name: <i><b>{{song.nameSong}}</b></i>     Song Duration: <i><b>{{song.durationSong}}</b></i>     Genere: <i><b>{{song.genere.genereName}}</b></i><br>
       <audio controls>
-        <source src="app/song/{{song.nameSong}}" type="audio/mpeg">
+        <source src="app/Tracks/{{song.nameSong}}" type="audio/mpeg">
       </audio>
+      <br>
+      <br>
     </li>
   </ul>
+</div>
 
-
-  <div class="form">
-    <form #newSong="ngForm" class="login-form">
-      <input type="text" placeholder="songName" name="songName" ngModel required/>
-      <input type="text" placeholder="songDuration" name="songDuration" ngModel required/>
-      <input type="text" placeholder="genereName" name="genereName" ngModel required/>
-      
-      <button (click)="addNewSong(newSong.value)">login</button>
-    </form>
+<div class="container">
+  <div class="row main">
+    <div class="main-login main-center">
+      <form #newSong="ngForm">
+        <div class="container">
+          <div class="form-group">
+            <label for="nameSong" class="cols-sm-2 control-label">Song Name</label>
+            <div class="cols-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" name="nameSong" id="nameSong" value="{{namef}}" placeholder="Select File .mp3" disabled ngModel required/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="form-group">
+            <label for="durationSong" class="cols-sm-2 control-label">Duration</label>
+            <div class="cols-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" name="durationSong" id="durationSong"  placeholder="Duration" ngModel required/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="form-group">
+            <label for="genereN" class="cols-sm-2 control-label">Genere
+            </label>
+            <div class="cols-sm-10">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                <select class="form-control" name="genereN" id="genereN" ngModel required>
+                  <option value="ELECTRONIC">ELECTRONIC</option>
+                  <option value="HIP HOP">HIP HOP</option>
+                  <option value="JAZZ">JAZZ</option>
+                  <option value="LATINO">LATINO</option>
+                  <option value="PUNK">PUNK</option>
+                  <option value="R & B">R & B</option>
+                  <option value="REGGAE">REGGAE</option>
+                  <option value="ROCK">ROCK</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group ">
+          <input type="file" name="file" (change)="onChange($event)"/><br>
+          <button class="btn btn-primary btn-lg btn-block login-button" (click)="addNew(newSong.value)">Add</button>
+        </div>
+      </form>
+    </div>
   </div>
-
-
-
 </div>

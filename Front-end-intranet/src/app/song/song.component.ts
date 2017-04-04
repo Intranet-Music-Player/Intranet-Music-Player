@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Playlist , Song } from './../entities/entities';
 import { SongService } from './../services/song.service';
 import { Observable } from 'rxjs/Observable';
+import {Headers} from "@angular/http";
 
 @Component({
   selector: 'app-song',
@@ -9,24 +10,47 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./song.component.css']
 })
 export class SongComponent implements OnInit {
+
+  file: File;
+  namef : string;
   songs : Song[];
 
-  constructor(private songService : SongService) { }
+  constructor(private songService : SongService) {  }
 
   ngOnInit() {
     this.loadSongs();
   }
 
+  onChange(event: EventTarget) {
+    let eventObj: MSInputMethodContext = <MSInputMethodContext> event;
+    let target: HTMLInputElement = <HTMLInputElement> eventObj.target;
+    let files: FileList = target.files;
+    this.file = files[0];
+    this.namef = this.file.name;
+    console.log(this.file);
+  }
+
+  doAnythingWithFile() {
+  }
+
   loadSongs(){
     this.songService.getSongs().subscribe(
-          songs => this.songs = songs , 
+          songs => this.songs = songs ,
           err => { console.log(err)});
   }
 
-  addNewSong(newSong : any){
-    this.songService.addNewSong(newSong).subscribe( err => console.log("OK"));
-    this.loadSongs();
-    console.log(newSong);
+  addNew(newSong : any) {
+    var songRequest : Song = {
+      songId : newSong.songId,
+      nameSong : newSong.nameSong,
+      durationSong : newSong.durationSong,
+      genereN : newSong.genereN
+    };
+
+    this.songService.addNewSong(songRequest).subscribe(
+      err => {console.log(err);}
+    )
+
   }
 
 }

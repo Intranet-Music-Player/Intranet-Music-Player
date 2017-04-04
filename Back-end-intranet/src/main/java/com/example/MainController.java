@@ -1,9 +1,6 @@
 package com.example;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,11 +13,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.example.entities.*;
 import com.example.repository.*;
-import com.example.requsest.AlbumRequest;
-import com.example.requsest.GenereRequest;
-import com.example.requsest.SongRequest;
-import com.example.requsest.UserRequest;
-import com.example.responses.UserResponse;
+import com.example.requsest.*;
+import com.example.responses.*;
 
 @Controller
 @EnableWebMvc
@@ -234,29 +228,39 @@ public class MainController extends WebMvcConfigurerAdapter {
 
 	/**********************************************************************************/
 	// NEEDS REVISONS
-	@RequestMapping(path = "/song", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
-	public @ResponseBody String addNewSong(@RequestBody SongRequest songRequest ) {
-		System.err.println(songRequest.getNameSong()+ songRequest.getDurationSong()+ songRequest.getGenere());
-		return null;
-//		if (albumRepository.findByNameAlbum(albumRequest.getNameAlbum()) != null) {
-//
-//			Album album = albumRepository.findByNameAlbum(albumRequest.getNameAlbum());
-//			Song song = songRepository.findByNameSong(songRequest.getNameSong());
-//
-//			if (album.getAlbumsongs().contains(song)) {
+	@RequestMapping(path = "/newSong", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
+	public @ResponseBody SongResponse addNewSong(@RequestBody SongRequest songRequest ) {
+//		if (  albumRepository.findByNameAlbum(albumRequest.getNameAlbum()) != null ){
+		
+//		Album album = albumRepository.findByNameAlbum(albumRequest.getNameAlbum());
+//		Song song = songRepository.findByNameSong(songRequest.getNameSong());
+			
+//			if ( album.getAlbumsongs().contains(song)) {
 //				return "ALBUM CONTAINS THE SONG";
-//
+//			
 //			} else {
-//				Genere owner = genereRepository.findByGenereName(genereRequest.getGenereName());
-//				Song newSong = new Song(songRequest.getNameSong(), songRequest.getDurationSong(), owner);
+			SongResponse response = new SongResponse();
+			if ( songRepository.findByNameSong(songRequest.getNameSong()) == null) {
+					
+				Genere owner = genereRepository.findByGenereName(songRequest.getGenereN());
+				Song newSong = new Song(songRequest.getNameSong(), songRequest.getDurationSong(), owner);
 //				album.addSong(newSong);
-//				newSong.setGenere(owner);
-//				songRepository.save(newSong);
-//				return "SONG ADDED TO THE ALBUM";
+				newSong.setGenere(owner);
+				songRepository.save(newSong);
+				response.setMessage("SONG ADDED");
+				response.setSuccess(true);
+				
+				return response;
+				
+			}else {
+				response.setMessage("SONG EXIST");
+				response.setSuccess(false);
+				return response;
+			}
 //			}
-//		} else {
-//			return " ALBUM DOESN'T EXIST";
-//		}
+//	} else {
+//		return " ALBUM DOESN'T EXIST";
+//	}
 	}
 
 	@RequestMapping(path = "/songs", method = RequestMethod.GET, produces = "Application/json")

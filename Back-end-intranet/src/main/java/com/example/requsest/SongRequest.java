@@ -1,6 +1,5 @@
 package com.example.requsest;
 
-import com.example.entities.Genere;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -8,18 +7,18 @@ public class SongRequest {
 	
 	private String nameSong;
 	private Integer durationSong;
-	private String genere;
+	private String genereN;
 	
 	
 	@JsonCreator
 	public SongRequest (@JsonProperty("namesong") String nameSong, 
 						@JsonProperty("durationsong") Integer durationSong, 
-						@JsonProperty("genereName") String genere) {
+						@JsonProperty("genereName") String genereN) {
 		
 		super();
 		this.nameSong = nameSong;
 		this.durationSong = durationSong;
-		this.genere = genere;
+		this.genereN = genereN;
 	}
 	
 	
@@ -38,10 +37,10 @@ public class SongRequest {
 	public void setDurationSong(Integer durationSong) {
 		this.durationSong = durationSong;
 	}
-	public String getGenere() {
-		return genere;
+	public String getGenereN() {
+		return genereN;
 	}
-	public void setGenere(String genere) {
-		this.genere = genere;
+	public void setGenereN(String genereN) {
+		this.genereN = genereN;
 	}
 }

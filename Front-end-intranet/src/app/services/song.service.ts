@@ -7,6 +7,7 @@ import { Song } from './../entities/entities';
 export class SongService {
 
   private songsUrl: string = 'http://localhost:8080/app/songs';
+  private newSongUrl: string = 'http://localhost:8080/app/newSong';
 
 
   constructor(private http: Http) { }
@@ -16,16 +17,15 @@ export class SongService {
       .map((res: Response) => res.json())
       .catch(handleError)
   }
-  addNewSong(newSong: any): Observable<any> {
-    let songRequest: any = {
-      namesong: newSong.songName,
-      durationsong: newSong.songDuration,
-      genereName: newSong.genereName
-    };
-    return this.http.post('http://localhost:8080/app/song', JSON.stringify(songRequest), { headers: getHeaders() })
-      .map((response: Response) => {
+  addNewSong( song : Song ) {
+    return this.http.post(this.newSongUrl, JSON.stringify(song), {headers: getHeaders()})
+      .map((response : Response) => {
         var res = response.json();
-        console.log(res.message);
+        if (res.message === "SONG ADDED") {
+          alert("SONG ADDED")
+        } else {
+          alert ("SONG EXIST")
+        }
       })
       .catch(handleError);
   }
