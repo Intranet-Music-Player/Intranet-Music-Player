@@ -9,6 +9,7 @@ import { PlaylistComponent } from './playlist/playlist.component';
 import { SongComponent } from './song/song.component';
 import { GenresComponent } from './genres/genres.component';
 import { UserComponent } from './user/user.component';
+import { SearchComponent } from './search/search.component';
 
 const APP_ROUTES: Routes = [
     { path: '', component: LoginComponent },
@@ -17,10 +18,11 @@ const APP_ROUTES: Routes = [
     {
         path: 'home', component: HomeComponent,
         children: [
-            { path: 'user', component: UserComponent },
             { path: 'playlists', component: PlaylistComponent },
             { path: 'songs', component: SongComponent },
-            { path: 'genres', component: GenresComponent }
+            { path: 'genres', component: GenresComponent },
+            { path: 'user', component: UserComponent },
+            { path: 'search', component: SearchComponent },
         ],
         canActivate: [AuthGuard]
     },

@@ -11,8 +11,8 @@ export class HomeComponent implements OnInit {
   constructor( private router: Router) { }
 
   ngOnInit() {
-    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
   }
+
   logOut(){
     localStorage.removeItem("currentUser");
     this.router.navigate(['login']);

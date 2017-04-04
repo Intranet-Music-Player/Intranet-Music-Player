@@ -1,0 +1,21 @@
+<div class="row">
+  <!--<div class="col-sm-6">
+    <div class="input-group stylish-input-group">
+      <input type="text" class="form-control" placeholder="Search" (keyup)="onKey($event)" [(ngModel)]="term">
+      <span class="input-group-addon">
+                        <button type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+      </button>
+      </span>
+    </div>
+    <div *ngFor="let playlist of playlists | filter : term">
+      <p> {{playlist.playlistName}} </p>
+    </div>
+  </div>-->
+  <div style="padding-left: 150px; padding-top: 100px;">
+    <input type="text" [(ngModel)]="playlistFilter.playlistName" placeholder="Search...">
+    <ul>
+      <li *ngFor="let playlist of playlists | filterBy: playlistFilter">{{ playlist.playlistName }}</li>
+    </ul>
+  </div>
+</div>

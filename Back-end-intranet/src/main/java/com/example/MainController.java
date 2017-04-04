@@ -1,5 +1,5 @@
 package com.example;
-
+/*04.04.217*/
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +20,7 @@ import com.example.requsest.AlbumRequest;
 import com.example.requsest.GenereRequest;
 import com.example.requsest.SongRequest;
 import com.example.requsest.UserRequest;
+import com.example.responses.SearchResponse;
 import com.example.responses.UserResponse;
 
 @Controller
@@ -90,6 +91,17 @@ public class MainController extends WebMvcConfigurerAdapter {
 		return userRepository.findAll();
 	}
 
+	/*@RequestMapping(path = "/search", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
+	public @ResponseBody SearchResponse searchData(@RequestBody String searchValue){
+
+		System.out.println(searchValue);
+		Song s = songRepository.findByNameSong(searchValue);
+		Artist a = artistRepository.findByName(searchValue);
+		Playlist p = playlistRepository.findByName(searchValue);
+		Album b = albumRepository.findByNameAlbum(searchValue);
+		SearchResponse match = new SearchResponse(s,a,p,b);	
+		return match;		
+	}*/
 	/**********************************************************************************/
 	// PLAYLIST ADD ---> WORKING FINE
 	@GetMapping(path = "/playlist/add")

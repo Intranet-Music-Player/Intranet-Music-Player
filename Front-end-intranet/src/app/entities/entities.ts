@@ -1,10 +1,3 @@
-export class User {
-    
-   userlogin :string ;
-   password :string ;
-   email : string ;
-   username : string ;
-} ;
 
 export class Playlist {
     playlistDuration : number;
@@ -13,6 +6,14 @@ export class Playlist {
     songs : Song[];
 } ;
 
+export class User {
+    
+   userlogin :string ;
+   password :string ;
+   email : string ;
+   username : string ;
+   playlists : Playlist;
+} ;
 export class Genres {
     genereId : number;
     genereName : string;
