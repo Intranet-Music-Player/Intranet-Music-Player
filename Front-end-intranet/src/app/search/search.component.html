@@ -1,21 +1,29 @@
-<div class="row">
-  <!--<div class="col-sm-6">
-    <div class="input-group stylish-input-group">
-      <input type="text" class="form-control" placeholder="Search" (keyup)="onKey($event)" [(ngModel)]="term">
-      <span class="input-group-addon">
-                        <button type="submit">
-                            <span class="glyphicon glyphicon-search"></span>
-      </button>
-      </span>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3 col-lg-3 col-sm-3">
+      <h4>SEARCH PLAYLIST NAME</h4>
+      <div class="input-group stylish-input-group">
+        <input type="text" class="form-control" [(ngModel)]="valor.playlistName" placeholder="Search">
+        <span class="input-group-addon">
+           <button type="submit"><span class="glyphicon glyphicon-search"></span>
+        </button>
+        </span>
+      </div>
+      <ul>
+        <li *ngFor="let playlist of playlists  | filterBy: valor"> {{ playlist.playlistName }} </li>
+      </ul>
     </div>
-    <div *ngFor="let playlist of playlists | filter : term">
-      <p> {{playlist.playlistName}} </p>
+    <div class="col-md-9 col-lg-9 col-sm-9">
+      <h4>MASTER-DETAIL </h4>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos possimus beatae iste numquam aliquid ex sint
+        temporibus enim, doloremque at vitae aspernatur nostrum perferendis ipsam praesentium sequi qui magni incidunt!</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus asperiores, corporis saepe fuga expedita blanditiis
+        non. Ipsum quia ad repellendus molestiae? Unde inventore eos reprehenderit quam deleniti repudiandae dolor, ea.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta quos sint id sequi ab natus amet dolore facere, tempore
+        inventore ducimus ut quidem, nisi non sed et perspiciatis placeat minus.</p>
+
     </div>
-  </div>-->
-  <div style="padding-left: 150px; padding-top: 100px;">
-    <input type="text" [(ngModel)]="playlistFilter.playlistName" placeholder="Search...">
-    <ul>
-      <li *ngFor="let playlist of playlists | filterBy: playlistFilter">{{ playlist.playlistName }}</li>
-    </ul>
+
+
   </div>
 </div>
