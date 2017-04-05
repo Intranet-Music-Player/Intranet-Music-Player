@@ -1,17 +1,19 @@
 package com.example.responses;
 
+import java.util.ArrayList;
+
 import com.example.entities.Album;
 import com.example.entities.Artist;
 import com.example.entities.Playlist;
 import com.example.entities.Song;
 
 public class SearchResponse {
-	private Song songs;
-	private Artist artists;
+	private ArrayList<Song> songs;
+	private ArrayList<Artist> artists;
 	private Playlist playlists;
 	private Album albums;
 	
-	public SearchResponse(Song songs, Artist artists, Playlist playlists, Album albums) {
+	public SearchResponse(ArrayList<Song> songs, ArrayList<Artist> artists, Playlist playlists, Album albums) {
 		super();
 		this.songs = songs;
 		this.artists = artists;
@@ -19,16 +21,16 @@ public class SearchResponse {
 		this.albums = albums;
 	}
 	
-	public Song getSongs() {
+	public ArrayList<Song> getSongs() {
 		return songs;
 	}
-	public void setSongs(Song songs) {
+	public void setSongs(ArrayList<Song> songs) {
 		this.songs = songs;
 	}
-	public Artist getArtists() {
+	public ArrayList<Artist> getArtists() {
 		return artists;
 	}
-	public void setArtists(Artist artists) {
+	public void setArtists(ArrayList<Artist> artists) {
 		this.artists = artists;
 	}
 	public Playlist getPlaylists() {

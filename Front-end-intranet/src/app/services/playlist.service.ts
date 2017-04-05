@@ -16,13 +16,6 @@ export class PlaylistService {
       .map((res: Response) => res.json())
       .catch(handleError)
   }
-
-  searchData(searchValue: string): Observable<Response> {
-    return this.http.post(this.searchUrl, JSON.stringify(searchValue) , { headers: getHeaders() })
-      .map((response: Response) => response.json())
-      .catch(handleError);
-  }
-
 }
 function handleError(error: any) {
   let errorMsg = error.message || 'ERROR -1-0-1'

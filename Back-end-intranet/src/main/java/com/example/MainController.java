@@ -1,4 +1,6 @@
 package com.example;
+import java.util.ArrayList;
+
 /*04.04.217*/
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,14 +15,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.example.entities.*;
 import com.example.repository.*;
-import com.example.requsest.AlbumRequest;
-import com.example.requsest.GenereRequest;
 import com.example.requsest.SongRequest;
 import com.example.requsest.UserRequest;
-import com.example.responses.SearchResponse;
 import com.example.responses.UserResponse;
-
-import com.example.requsest.*;
 import com.example.responses.*;
 
 @Controller
@@ -91,17 +88,16 @@ public class MainController extends WebMvcConfigurerAdapter {
 		return userRepository.findAll();
 	}
 
-	/*@RequestMapping(path = "/search", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
+	@RequestMapping(path = "/search", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
 	public @ResponseBody SearchResponse searchData(@RequestBody String searchValue){
 
 		System.out.println(searchValue);
-		Song s = songRepository.findByNameSong(searchValue);
-		Artist a = artistRepository.findByName(searchValue);
-		Playlist p = playlistRepository.findByName(searchValue);
-		Album b = albumRepository.findByNameAlbum(searchValue);
-		SearchResponse match = new SearchResponse(s,a,p,b);	
+		ArrayList<Song> s = (ArrayList<Song>) songRepository.findAll();
+		ArrayList<Artist> a = (ArrayList<Artist>) artistRepository.findAll();
+		
+		SearchResponse match = new SearchResponse(s,a,null,null);	
 		return match;		
-	}*/
+	}
 	/**********************************************************************************/
 	// PLAYLIST ADD ---> WORKING FINE
 	@GetMapping(path = "/playlist/add")

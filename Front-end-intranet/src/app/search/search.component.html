@@ -9,8 +9,8 @@
         </button>
         </span>
       </div>
-      <ul>
-        <li *ngFor="let playlist of playlists  | filterBy: valor"> {{ playlist.playlistName }} </li>
+      <ul class="list-group">
+        <li *ngFor="let playlist of playlists  | filterBy: valor" class="list-group-item"> {{ playlist.playlistName }} </li>
       </ul>
     </div>
     <div class="col-md-9 col-lg-9 col-sm-9">
