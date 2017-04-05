@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { Routing } from 'app/app.routing'
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2FilterPipeModule } from 'ng2-filter-pipe';
 
 import { AppComponent } from './app.component';
@@ -41,7 +40,6 @@ import { SearchComponent } from './search/search.component';
     FormsModule,
     HttpModule,
     Routing,
-    Ng2SearchPipeModule,
     Ng2FilterPipeModule
   ],
   providers: [UserService, PlaylistService, GenresService , SongService ,AuthGuard ],
