@@ -13,17 +13,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.example.entities.*;
 import com.example.repository.*;
-<<<<<<< HEAD
 import com.example.requsest.AlbumRequest;
 import com.example.requsest.GenereRequest;
 import com.example.requsest.SongRequest;
 import com.example.requsest.UserRequest;
 import com.example.responses.SearchResponse;
 import com.example.responses.UserResponse;
-=======
+
 import com.example.requsest.*;
 import com.example.responses.*;
->>>>>>> 0b3dc2e8e3585190f58622a35b8397026068bddd
 
 @Controller
 @EnableWebMvc
