@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
   }
 
   logOut(){
-    localStorage.removeItem("currentUser");
+    sessionStorage.removeItem("currentUser");
     this.router.navigate(['login']);
   }
 }

@@ -7,8 +7,8 @@ import { Playlist } from './../entities/entities';
 export class PlaylistService {
 
   private playlistUrl: string = 'http://localhost:8080/app/playlists';
-  private playistNew: string = 'http://localhost:8080/app/newPlaylist';
-  private searchUrl: string = 'http://localhost:8080/app/search';
+  private playistNew: string = 'http://localhost:8080/app/playlist/add';
+
   constructor(private http: Http) { }
 
   getPlaylists(): Observable<Playlist[]> {
@@ -16,6 +16,20 @@ export class PlaylistService {
       .map((res: Response) => res.json())
       .catch(handleError)
   }
+  addPlaylist(newPlaylist: any): Observable<any> {
+    console.log(newPlaylist);
+    return this.http.post(this.playistNew, JSON.stringify(newPlaylist), { headers: getHeaders() })
+      .map((response: Response) => {   
+        var res = response.json(); 
+        if( res.success ==true){
+          alert(res.message);
+        } else{
+          alert(res.message);         
+        }      
+    })
+      .catch(handleError);
+  }
+
 }
 function handleError(error: any) {
   let errorMsg = error.message || 'ERROR -1-0-1'

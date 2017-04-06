@@ -8,16 +8,22 @@ import { PlaylistService } from './../services/playlist.service';
   styleUrls: ['./playlist.component.css']
 })
 export class PlaylistComponent implements OnInit {
+  private currentUser : any;
   playlists: Playlist[];
   selectedPlaylist: Playlist;
   selectedSong : Song ;
-  //es: boolean = true;/
   hideme: any = {};
+  hideNewPlaylist : boolean = false;
+
+  hideShowNewPlaylist(){
+        this.hideNewPlaylist = !this.hideNewPlaylist;
+  }
 
   constructor(private playlistService: PlaylistService) { }
 
   ngOnInit() {
     this.loadPlaylists();
+    this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
   }
 
   loadPlaylists() {
@@ -29,16 +35,26 @@ export class PlaylistComponent implements OnInit {
   onSelectPlaylist(playlist: Playlist): void {
     this.selectedPlaylist = playlist;
   }
-
   onSelectSong(song : Song){
     this.selectedSong = song;
   }
-
   onShowListSong() {
     Object.keys(this.hideme).forEach(h => {
       this.hideme[h] = false;
     });
     this.hideme[this.selectedPlaylist.playlistId] = true;
   }
+  addNewPlaylist(newPlaylist : any){
+    var userlogin = this.currentUser.userlogin;
+    //console.log(newPlaylist.name + "--/-/--"+ userlogin);
+    var playlistRequest : any = {
+      userlogin : userlogin ,
+      playlistName : newPlaylist.name
+    }
+    this.playlistService.addPlaylist(playlistRequest).subscribe();
+  }
 
+  following(){
+    console.log("FOLLOWING");
+  }
 }

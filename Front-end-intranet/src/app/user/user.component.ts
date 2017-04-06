@@ -13,7 +13,7 @@ export class UserComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-      this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
       this.playlists = this.currentUser.playlists;
       console.log(this.playlists);
       //console.log("CURRENT USER : " + this.currentUser.playlists[0].playlistName);

@@ -29,7 +29,7 @@ export class UserService {
       .map((response: Response) => {
         var res = response.json();
         if (res.message === 'SUCCESFULL') {
-          localStorage.setItem('currentUser',JSON.stringify(res.user));
+          sessionStorage.setItem('currentUser',JSON.stringify(res.user));
           this.router.navigate(['home']);
         } else {
           alert("LOGIN OR PASSWORD INCORRECT")
