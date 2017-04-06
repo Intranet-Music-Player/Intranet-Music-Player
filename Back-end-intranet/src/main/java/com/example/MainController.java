@@ -1,4 +1,6 @@
 package com.example;
+import java.io.File;
+
 /*04.04.217*/
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +19,6 @@ import com.example.requsest.AlbumRequest;
 import com.example.requsest.GenereRequest;
 import com.example.requsest.SongRequest;
 import com.example.requsest.UserRequest;
-import com.example.responses.SearchResponse;
 import com.example.responses.UserResponse;
 
 import com.example.requsest.*;
@@ -261,6 +262,7 @@ public class MainController extends WebMvcConfigurerAdapter {
 			if ( songRepository.findByNameSong(songRequest.getNameSong()) == null) {
 					
 				Genere owner = genereRepository.findByGenereName(songRequest.getGenereN());
+				System.err.println(songRequest.getAfile());
 				Song newSong = new Song(songRequest.getNameSong(), songRequest.getDurationSong(), owner);
 //				album.addSong(newSong);
 				newSong.setGenere(owner);

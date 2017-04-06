@@ -11,9 +11,9 @@ import {Headers} from "@angular/http";
 })
 export class SongComponent implements OnInit {
 
-  file: File;
-  namef : string;
-  songs : Song[];
+  songs : Song;
+  file : File;
+  songlist : Song[];
 
   constructor(private songService : SongService) {  }
 
@@ -25,17 +25,17 @@ export class SongComponent implements OnInit {
     let eventObj: MSInputMethodContext = <MSInputMethodContext> event;
     let target: HTMLInputElement = <HTMLInputElement> eventObj.target;
     let files: FileList = target.files;
-    this.file = files[0];
-    this.namef = this.file.name;
+    this.file= files[0];
     console.log(this.file);
   }
 
   doAnythingWithFile() {
+
   }
 
   loadSongs(){
     this.songService.getSongs().subscribe(
-          songs => this.songs = songs ,
+          songs => this.songlist = songs ,
           err => { console.log(err)});
   }
 
@@ -44,10 +44,14 @@ export class SongComponent implements OnInit {
       songId : newSong.songId,
       nameSong : newSong.nameSong,
       durationSong : newSong.durationSong,
-      genereN : newSong.genereN
+      genereN : newSong.genereN,
+      afile : newSong.file
     };
-
+    console.log(songRequest);
     this.songService.addNewSong(songRequest).subscribe(
+      err => {console.log(err);}
+    )
+    this.songService.makeFileRequest(newSong).subscribe(
       err => {console.log(err);}
     )
 

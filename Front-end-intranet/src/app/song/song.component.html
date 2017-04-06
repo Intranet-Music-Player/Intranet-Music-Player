@@ -21,7 +21,7 @@
             <div class="cols-sm-10">
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                <input type="text" class="form-control" name="nameSong" id="nameSong" value="{{namef}}" placeholder="Select File .mp3" disabled ngModel required/>
+                <input type="text"  class="form-control" name="nameSong" id="nameSong" placeholder="Select File .mp3" ngModel required/>
               </div>
             </div>
           </div>
@@ -59,7 +59,8 @@
           </div>
         </div>
         <div class="form-group ">
-          <input type="file" name="file" (change)="onChange($event)"/><br>
+          <label for="afile" class="cols-sm-2 control-label">Song Name</label>
+          <input type="file" name="afile" id="afile" (change)="onChange($event)"/><br>
           <button class="btn btn-primary btn-lg btn-block login-button" (click)="addNew(newSong.value)">Add</button>
         </div>
       </form>
