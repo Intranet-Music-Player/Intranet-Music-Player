@@ -1,4 +1,5 @@
 package com.example;
+
 import java.util.ArrayList;
 
 /*04.04.217*/
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.example.entities.*;
 import com.example.repository.*;
+import com.example.requsest.PlaylistRequest;
 import com.example.requsest.SongRequest;
 import com.example.requsest.UserRequest;
 import com.example.responses.UserResponse;
@@ -71,7 +73,7 @@ public class MainController extends WebMvcConfigurerAdapter {
 		System.err.println(userRequest.getUserlogin() + "-----" + userRequest.getPassword());
 		User log = userRepository.findByUserlogin(userRequest.getUserlogin());
 		UserResponse response = new UserResponse();
-	
+
 		if (log != null && log.getUserlogin().equals(userRequest.getUserlogin())
 				&& log.getPassword().equals(userRequest.getPassword())) {
 			response.setUser(log);
@@ -89,50 +91,65 @@ public class MainController extends WebMvcConfigurerAdapter {
 	}
 
 	@RequestMapping(path = "/search", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
-	public @ResponseBody SearchResponse searchData(@RequestBody String searchValue){
+	public @ResponseBody SearchResponse searchData(@RequestBody String searchValue) {
 
 		System.out.println(searchValue);
 		ArrayList<Song> s = (ArrayList<Song>) songRepository.findAll();
 		ArrayList<Artist> a = (ArrayList<Artist>) artistRepository.findAll();
-		
-		SearchResponse match = new SearchResponse(s,a,null,null);	
-		return match;		
+
+		SearchResponse match = new SearchResponse(s, a, null, null);
+		return match;
 	}
+
 	/**********************************************************************************/
 	// PLAYLIST ADD ---> WORKING FINE
-	@GetMapping(path = "/playlist/add")
-	public @ResponseBody String addNewPlaylist( // @RequestParam String
-												// nameSong,
-			@RequestParam String userlogin, @RequestParam String playlistName) {
-
-		if (playlistRepository.findByName(playlistName) != null) {
-			Playlist newPlay = playlistRepository.findByName(playlistName);
-
-			// Song song = songRepository.findByNameSong(nameSong);
-			// song.addPlaylist(newPlay);
-			User owner = userRepository.findByUserlogin(userlogin);
-			if (owner != null) {
-				owner.addPlaylist(newPlay);
-				playlistRepository.save(newPlay);
-				return "YOU ARE FOLLOWING A PLAYLIST";
-			} else {
-				return "USER DON'T EXISTS";
-			}
-
+	@RequestMapping(path = "/playlist/add", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
+	public @ResponseBody Response addNewPlaylist(@RequestBody PlaylistRequest playlistRequest) {
+		Response r = new Response();
+		System.out.println(playlistRequest.getName() + "/////" + playlistRequest.getUserlogin());
+		if (playlistRepository.findByName(playlistRequest.getName()) == null) {
+			Playlist p = new Playlist();
+			User owner = userRepository.findByUserlogin(playlistRequest.getUserlogin());
+			
+			p.setPlaylistName(playlistRequest.getName());
+			playlistRepository.save(p);
+			owner.addPlaylist(p);
+			r.setMessage("PLAYLIST CREATED CORRECTLY");
+			r.setSuccess(true);
+			return r;
 		} else {
-
-			Playlist newPlay = new Playlist();
-
-			newPlay.setPlaylistName(playlistName);
-			// newPlay.setPlaylistDuration(duration);
-			// Song song = songRepository.findByNameSong(nameSong);
-			// song.addPlaylist(newPlay);
-			User owner = userRepository.findByUserlogin(userlogin);
-			owner.addPlaylist(newPlay);
-			playlistRepository.save(newPlay);
-
-			return "NEW PLAYLIST ADDED";
+			r.setMessage("SOMETHING GONE WRONG");
+			r.setSuccess(false);
+			return r;
 		}
+		// if (playlistRepository.findByName(playlistName) != null) {
+		// Playlist newPlay = playlistRepository.findByName(playlistName);
+		//
+		// // Song song = songRepository.findByNameSong(nameSong);
+		// // song.addPlaylist(newPlay);
+		// User owner = userRepository.findByUserlogin(userlogin);
+		// if (owner != null) {
+		// owner.addPlaylist(newPlay);
+		// playlistRepository.save(newPlay);
+		// return "YOU ARE FOLLOWING A PLAYLIST";
+		// } else {
+		// return "USER DON'T EXISTS";
+		// }
+		//
+		// } else {
+		//
+		// Playlist newPlay = new Playlist();
+		//
+		// newPlay.setPlaylistName(playlistName);
+		// // newPlay.setPlaylistDuration(duration);
+		// // Song song = songRepository.findByNameSong(nameSong);
+		// // song.addPlaylist(newPlay);
+		// User owner = userRepository.findByUserlogin(userlogin);
+		// owner.addPlaylist(newPlay);
+		// playlistRepository.save(newPlay);
+		//
+		// return "NEW PLAYLIST ADDED";
+		// }
 
 	}
 
@@ -243,38 +260,40 @@ public class MainController extends WebMvcConfigurerAdapter {
 	/**********************************************************************************/
 	// NEEDS REVISONS
 	@RequestMapping(path = "/newSong", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
-	public @ResponseBody SongResponse addNewSong(@RequestBody SongRequest songRequest ) {
-//		if (  albumRepository.findByNameAlbum(albumRequest.getNameAlbum()) != null ){
-		
-//		Album album = albumRepository.findByNameAlbum(albumRequest.getNameAlbum());
-//		Song song = songRepository.findByNameSong(songRequest.getNameSong());
-			
-//			if ( album.getAlbumsongs().contains(song)) {
-//				return "ALBUM CONTAINS THE SONG";
-//			
-//			} else {
-			SongResponse response = new SongResponse();
-			if ( songRepository.findByNameSong(songRequest.getNameSong()) == null) {
-					
-				Genere owner = genereRepository.findByGenereName(songRequest.getGenereN());
-				Song newSong = new Song(songRequest.getNameSong(), songRequest.getDurationSong(), owner);
-//				album.addSong(newSong);
-				newSong.setGenere(owner);
-				songRepository.save(newSong);
-				response.setMessage("SONG ADDED");
-				response.setSuccess(true);
-				
-				return response;
-				
-			}else {
-				response.setMessage("SONG EXIST");
-				response.setSuccess(false);
-				return response;
-			}
-//			}
-//	} else {
-//		return " ALBUM DOESN'T EXIST";
-//	}
+	public @ResponseBody SongResponse addNewSong(@RequestBody SongRequest songRequest) {
+		// if ( albumRepository.findByNameAlbum(albumRequest.getNameAlbum()) !=
+		// null ){
+
+		// Album album =
+		// albumRepository.findByNameAlbum(albumRequest.getNameAlbum());
+		// Song song = songRepository.findByNameSong(songRequest.getNameSong());
+
+		// if ( album.getAlbumsongs().contains(song)) {
+		// return "ALBUM CONTAINS THE SONG";
+		//
+		// } else {
+		SongResponse response = new SongResponse();
+		if (songRepository.findByNameSong(songRequest.getNameSong()) == null) {
+
+			Genere owner = genereRepository.findByGenereName(songRequest.getGenereN());
+			Song newSong = new Song(songRequest.getNameSong(), songRequest.getDurationSong(), owner);
+			// album.addSong(newSong);
+			newSong.setGenere(owner);
+			songRepository.save(newSong);
+			response.setMessage("SONG ADDED");
+			response.setSuccess(true);
+
+			return response;
+
+		} else {
+			response.setMessage("SONG EXIST");
+			response.setSuccess(false);
+			return response;
+		}
+		// }
+		// } else {
+		// return " ALBUM DOESN'T EXIST";
+		// }
 	}
 
 	@RequestMapping(path = "/songs", method = RequestMethod.GET, produces = "Application/json")

@@ -4,13 +4,13 @@
       <h4>SEARCH PLAYLIST NAME</h4>
       <div class="input-group stylish-input-group">
         <input type="text" class="form-control" [(ngModel)]="valor.playlistName" placeholder="Search">
-        <span class="input-group-addon">
-           <button type="submit"><span class="glyphicon glyphicon-search"></span>
-        </button>
+        <span class="input-group-addon"><button type="submit"><span class="glyphicon glyphicon-search"></span></button>
         </span>
       </div>
+      
       <ul class="list-group">
-        <li *ngFor="let playlist of playlists  | filterBy: valor" class="list-group-item"> {{ playlist.playlistName }} </li>
+        <li *ngFor="let playlist of playlists| filterBy: valor" class="list-group-item"> {{ playlist.playlistName }} </li>
+        <li *ngFor="let song of songs | filterBy: valor" class="list-group-item"> {{ song.name }} <span class="glyphicon glyphicon-music"></span> </li>
       </ul>
     </div>
     <div class="col-md-9 col-lg-9 col-sm-9">
@@ -23,7 +23,5 @@
         inventore ducimus ut quidem, nisi non sed et perspiciatis placeat minus.</p>
 
     </div>
-
-
   </div>
 </div>

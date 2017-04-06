@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
-
+import { Response } from '@angular/http';
 import { User } from '../entities/entities';
 import { Observable } from 'rxjs/Rx';
 
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   }
 
   checkLogin(login: User) {
-    this.userService.checkUserLogin(login).subscribe()
+      this.userService.checkUserLogin(login).subscribe();
   }
 
 }

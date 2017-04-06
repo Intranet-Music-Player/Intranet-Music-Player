@@ -77,7 +77,7 @@ public class User {
 		this.email = email;
 	}
 	public void addPlaylist (Playlist playlist){
-		playlists.add(playlist);
+		this.playlists.add(playlist);
 	}
 	
 	
