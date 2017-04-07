@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -247,6 +248,13 @@ public class MainController extends WebMvcConfigurerAdapter {
 
 	/**********************************************************************************/
 	// NEEDS REVISONS
+	@RequestMapping(method = RequestMethod.POST, value = "/upload")
+	public String handleFileUpload(@RequestParam MultipartFile file) {
+		
+		System.err.println(file);
+		return null;
+	}
+	
 	@RequestMapping(path = "/newSong", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
 	public @ResponseBody SongResponse addNewSong(@RequestBody SongRequest songRequest ) {
 //		if (  albumRepository.findByNameAlbum(albumRequest.getNameAlbum()) != null ){

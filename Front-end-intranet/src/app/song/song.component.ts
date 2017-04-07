@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Playlist , Song } from './../entities/entities';
 import { SongService } from './../services/song.service';
+import { UlploadService } from './../services/ulpload.service';
 import { Observable } from 'rxjs/Observable';
 import {Headers} from "@angular/http";
 
@@ -15,22 +16,24 @@ export class SongComponent implements OnInit {
   file : File;
   songlist : Song[];
 
-  constructor(private songService : SongService) {  }
+  constructor(private songService : SongService, private uploadService : UlploadService) {
+    this.uploadService.progress.subscribe(
+      data => {
+        console.log('progress = '+data);
+      });
+  }
 
   ngOnInit() {
     this.loadSongs();
   }
 
-  onChange(event: EventTarget) {
-    let eventObj: MSInputMethodContext = <MSInputMethodContext> event;
-    let target: HTMLInputElement = <HTMLInputElement> eventObj.target;
-    let files: FileList = target.files;
-    this.file= files[0];
-    console.log(this.file);
-  }
-
-  doAnythingWithFile() {
-
+  onChange(event) {
+    console.log('onChange');
+    var files = event.srcElement.files;
+    console.log(files);
+    this.uploadService.makeFileRequest('http://localhost:8080/app/upload', [], files).subscribe(() => {
+      console.log('sent');
+    });
   }
 
   loadSongs(){
@@ -50,11 +53,7 @@ export class SongComponent implements OnInit {
     console.log(songRequest);
     this.songService.addNewSong(songRequest).subscribe(
       err => {console.log(err);}
-    )
-    this.songService.makeFileRequest(newSong).subscribe(
-      err => {console.log(err);}
-    )
-
+    );
   }
 
 }

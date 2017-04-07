@@ -32,31 +32,6 @@ export class SongService {
       .catch(handleError);
   }
 
-  makeFileRequest(files: File[]) {
-    return Observable.create(observer => {
-      let formData: FormData = new FormData(),
-        xhr: XMLHttpRequest = new XMLHttpRequest();
-
-      for (let i = 0; i < files.length; i++) {
-        formData.append("uploads[]", files[i], files[i].name);
-      }
-
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-            observer.next(JSON.parse(xhr.response));
-            observer.complete();
-          } else {
-            observer.error(xhr.response);
-          }
-        }
-      };
-
-      xhr.open('POST', this.newSongUrl, true);
-      xhr.send(formData);
-    });
-  }
-
 }
 function handleError(error: any) {
   let errorMsg = error.message || 'ERROR -1-0-1'

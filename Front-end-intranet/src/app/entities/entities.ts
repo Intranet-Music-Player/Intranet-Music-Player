@@ -23,4 +23,5 @@ export class Song {
     nameSong : string;
     durationSong : number;
     genereN : string;
+    afile : File;
 } ;
