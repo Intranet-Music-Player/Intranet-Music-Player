@@ -38,6 +38,7 @@ export class UserService {
       })
       .catch(handleError);
   }
+  
 }
 
 function getHeaders() {

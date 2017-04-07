@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Playlist , Song} from './../entities/entities';
+import { Playlist, Song } from './../entities/entities';
 import { PlaylistService } from './../services/playlist.service';
 
 @Component({
@@ -8,15 +8,15 @@ import { PlaylistService } from './../services/playlist.service';
   styleUrls: ['./playlist.component.css']
 })
 export class PlaylistComponent implements OnInit {
-  private currentUser : any;
+  private currentUser: any;
   playlists: Playlist[];
   selectedPlaylist: Playlist;
-  selectedSong : Song ;
+  selectedSong: Song;
   hideme: any = {};
-  hideNewPlaylist : boolean = false;
+  hideNewPlaylist: boolean = false;
 
-  hideShowNewPlaylist(){
-        this.hideNewPlaylist = !this.hideNewPlaylist;
+  hideShowNewPlaylist() {
+    this.hideNewPlaylist = !this.hideNewPlaylist;
   }
 
   constructor(private playlistService: PlaylistService) { }
@@ -35,7 +35,7 @@ export class PlaylistComponent implements OnInit {
   onSelectPlaylist(playlist: Playlist): void {
     this.selectedPlaylist = playlist;
   }
-  onSelectSong(song : Song){
+  onSelectSong(song: Song) {
     this.selectedSong = song;
   }
   onShowListSong() {
@@ -44,17 +44,12 @@ export class PlaylistComponent implements OnInit {
     });
     this.hideme[this.selectedPlaylist.playlistId] = true;
   }
-  addNewPlaylist(newPlaylist : any){
-    var userlogin = this.currentUser.userlogin;
-    //console.log(newPlaylist.name + "--/-/--"+ userlogin);
-    var playlistRequest : any = {
-      userlogin : userlogin ,
-      playlistName : newPlaylist.name
+  following() {
+    var followRequest : any ={
+      playlistName : this.selectedPlaylist.playlistName,
+      userlogin : this.currentUser.userlogin
     }
-    this.playlistService.addPlaylist(playlistRequest).subscribe();
-  }
-
-  following(){
+    this.playlistService.userFollowPlaylist(followRequest).subscribe();
     console.log("FOLLOWING");
   }
 }

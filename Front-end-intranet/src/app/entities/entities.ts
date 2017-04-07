@@ -24,3 +24,10 @@ export class Song {
     durationSong : number;
     genereN : string;
 } ;
+
+export class Album {
+    datapub : string;
+    nameAlbum : string;
+    bandId : number;
+} ;
+

@@ -11,3 +11,19 @@
     padding: 5px;
     font-size: 15px;
 }
+
+.btn-circle {
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+}
+
+.input-circle{
+  height: 30px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 10px;
+}

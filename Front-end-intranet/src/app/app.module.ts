@@ -42,7 +42,7 @@ import { SearchComponent } from './search/search.component';
     Routing,
     Ng2FilterPipeModule
   ],
-  providers: [UserService, PlaylistService, GenresService , SongService ,AuthGuard ],
+  providers: [UserService, PlaylistService, GenresService, SongService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
