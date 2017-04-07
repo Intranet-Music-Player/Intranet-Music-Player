@@ -42,7 +42,7 @@ export class SongComponent implements OnInit {
   addNew(newSong : any) {
     var songRequest : Song = {
       songId : newSong.songId,
-      name : newSong.nameSong,
+      nameSong : newSong.nameSong,
       durationSong : newSong.durationSong,
       genereN : newSong.genereN
     };

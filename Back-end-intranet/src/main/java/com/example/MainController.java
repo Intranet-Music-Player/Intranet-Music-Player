@@ -85,6 +85,32 @@ public class MainController extends WebMvcConfigurerAdapter {
 		}
 	}
 
+	@RequestMapping(path = "/removePlaylist", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
+	public @ResponseBody void removeUserPlaylist(@RequestBody UserRequest userRequest) {
+		// NEED TO DO SOME STUFF HERE
+	}
+
+	@RequestMapping(path = "/followPlaylist", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
+	public @ResponseBody Response userFollowPlaylist(@RequestBody PlaylistRequest followRequest) {
+
+		Response r = new Response();
+		User owner = userRepository.findByUserlogin(followRequest.getUserlogin());
+		Playlist p = playlistRepository.findByName(followRequest.getName());
+		owner.addPlaylist(p);
+		if (owner.getPlaylists().contains(p)) {
+			r.setMessage("YOU ARE ALREADY FOLLOWING THIS PLAYLIST");
+			r.setSuccess(false);
+			return r;
+		} else {		
+			r.setSuccess(true);
+			r.setMessage("NOW YOU FOLLOW THIS PLAYLIST");
+			owner.getPlaylists().add(p);
+			userRepository.save(owner);
+			return r;
+		}
+		
+	}
+
 	@RequestMapping(path = "/users", method = RequestMethod.GET, produces = "Application/json")
 	public @ResponseBody Iterable<User> listAllUsers() {
 		return userRepository.findAll();
@@ -110,7 +136,7 @@ public class MainController extends WebMvcConfigurerAdapter {
 		if (playlistRepository.findByName(playlistRequest.getName()) == null) {
 			Playlist p = new Playlist();
 			User owner = userRepository.findByUserlogin(playlistRequest.getUserlogin());
-			
+
 			p.setPlaylistName(playlistRequest.getName());
 			playlistRepository.save(p);
 			owner.addPlaylist(p);
