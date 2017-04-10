@@ -1,6 +1,9 @@
 package com.example;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /*04.04.217*/
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,37 +81,56 @@ public class MainController extends WebMvcConfigurerAdapter {
 				&& log.getPassword().equals(userRequest.getPassword())) {
 			response.setUser(log);
 			response.setMessage("SUCCESFULL");
+			response.setSuccess(true);
 			return response;
 		} else {
 			response.setMessage("LOGIN OR PASSWORD WRONG");
+			response.setSuccess(false);
 			return response;
 		}
 	}
 
+	@RequestMapping(path = "/userlogin", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
+	public @ResponseBody UserResponse getCurrentUser(@RequestBody UserRequest userRequest) {
+		UserResponse u = new UserResponse();
+		User currentUser = userRepository.findByUserlogin(userRequest.getUserlogin());
+		u.setUser(currentUser);
+		return u;
+	}
+
 	@RequestMapping(path = "/removePlaylist", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
-	public @ResponseBody void removeUserPlaylist(@RequestBody UserRequest userRequest) {
-		// NEED TO DO SOME STUFF HERE
+	public @ResponseBody Response removeUserPlaylist(@RequestBody PlaylistRequest removeRequest) {
+		System.out.println(removeRequest.getUserlogin() + "--//--" + removeRequest.getPlaylistId());
+
+		User us = userRepository.findByUserlogin(removeRequest.getUserlogin());
+		Playlist remove = playlistRepository.findOne(removeRequest.getPlaylistId());
+
+		us.getPlaylists().remove(remove);
+		userRepository.save(us);
+
+		Response r = new Response();
+		r.setMessage("PLAYLIST DELETED");
+		r.setSuccess(true);
+		return r;
 	}
 
 	@RequestMapping(path = "/followPlaylist", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
 	public @ResponseBody Response userFollowPlaylist(@RequestBody PlaylistRequest followRequest) {
-
 		Response r = new Response();
 		User owner = userRepository.findByUserlogin(followRequest.getUserlogin());
-		Playlist p = playlistRepository.findByName(followRequest.getName());
-		owner.addPlaylist(p);
+		Playlist p = playlistRepository.findOne(followRequest.getPlaylistId());
 		if (owner.getPlaylists().contains(p)) {
 			r.setMessage("YOU ARE ALREADY FOLLOWING THIS PLAYLIST");
 			r.setSuccess(false);
 			return r;
-		} else {		
+		} else {
 			r.setSuccess(true);
 			r.setMessage("NOW YOU FOLLOW THIS PLAYLIST");
 			owner.getPlaylists().add(p);
 			userRepository.save(owner);
 			return r;
 		}
-		
+
 	}
 
 	@RequestMapping(path = "/users", method = RequestMethod.GET, produces = "Application/json")
@@ -139,9 +161,10 @@ public class MainController extends WebMvcConfigurerAdapter {
 
 			p.setPlaylistName(playlistRequest.getName());
 			playlistRepository.save(p);
-			owner.addPlaylist(p);
+			owner.getPlaylists().add(p);
 			r.setMessage("PLAYLIST CREATED CORRECTLY");
 			r.setSuccess(true);
+			userRepository.save(owner);
 			return r;
 		} else {
 			r.setMessage("SOMETHING GONE WRONG");

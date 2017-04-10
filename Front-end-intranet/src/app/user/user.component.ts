@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Playlist, Song } from './../entities/entities';
 import { PlaylistService } from './../services/playlist.service';
-
+import { UserService } from './../services/user.service';
 import { User } from '../entities/entities';
 @Component({
   selector: 'app-user',
@@ -14,31 +14,47 @@ export class UserComponent implements OnInit {
   selectedPlaylist: Playlist;
   hideme: any = {};
 
-
-  constructor(private playlistService: PlaylistService) { }
-
+  constructor(private playlistService: PlaylistService, private userService: UserService) { }
   ngOnInit() {
-    this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+    this.getCurrentUSer();
     this.playlists = this.currentUser.playlists;
-    console.log(this.playlists);
-    //console.log("CURRENT USER : " + this.currentUser.playlists[0].playlistName);
   }
   addNewPlaylist(newPlaylist: any) {
+    var playlistResponse: any;
     var userlogin = this.currentUser.userlogin;
-    //console.log(newPlaylist.name + "--/-/--"+ userlogin);
     var playlistRequest: any = {
       userlogin: userlogin,
       playlistName: newPlaylist.name
     }
     if (newPlaylist.name != null) {
-      this.playlistService.addPlaylist(playlistRequest).subscribe();
-      location.reload();
+      this.playlistService.addPlaylist(playlistRequest).subscribe(
+        playlistResponse => {
+          playlistResponse = playlistResponse;
+          if (playlistResponse.success == true) {
+            alert(playlistResponse.message);
+          } else {
+            alert(playlistResponse.message);
+          }
+        }
+      );
+      this.getCurrentUSer();
     } else {
       alert("NAME OF THE PLAYLIST SHOULD HAVE A NAME")
     }
-
+    location.reload();
   }
-
+  getCurrentUSer() {
+    this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
+    var userRequest: any = {
+      userlogin: this.currentUser.userlogin
+    }
+    this.userService.getCurrentUser(userRequest).subscribe(
+      getUser => {
+        this.currentUser = getUser.user;
+        this.playlists = this.currentUser.playlists;
+      }
+    )
+  }
   onSelectPlaylist(playlist: Playlist): void {
     this.selectedPlaylist = playlist;
   }
@@ -48,7 +64,18 @@ export class UserComponent implements OnInit {
     });
     this.hideme[this.selectedPlaylist.playlistId] = true;
   }
+ 
   removePlaylist() {
-    console.log("THIS FUNCTION SHOULD REMOVE A PLAYLIST");
+    try {
+      var removeRequest: any = {
+        playlistId: this.selectedPlaylist.playlistId,
+        userlogin: this.currentUser.userlogin
+      }
+      this.playlistService.removeUserPlaylist(removeRequest).subscribe();
+      this.getCurrentUSer();
+      location.reload();
+    } catch (e) {
+      alert("SELECT PLAYLIST TO DELETE");
+    }
   }
 }

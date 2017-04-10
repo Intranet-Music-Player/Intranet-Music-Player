@@ -45,11 +45,10 @@ export class PlaylistComponent implements OnInit {
     this.hideme[this.selectedPlaylist.playlistId] = true;
   }
   following() {
-    var followRequest : any ={
-      playlistName : this.selectedPlaylist.playlistName,
+    var followRequest : any = {
+      playlistId : this.selectedPlaylist.playlistId,
       userlogin : this.currentUser.userlogin
     }
     this.playlistService.userFollowPlaylist(followRequest).subscribe();
-    console.log("FOLLOWING");
   }
 }
