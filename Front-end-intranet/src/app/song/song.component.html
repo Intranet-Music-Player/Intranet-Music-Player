@@ -59,8 +59,7 @@
           </div>
         </div>
         <div class="form-group ">
-          <label for="afile" class="cols-sm-2 control-label">Song Name</label>
-          <input type="file" name="afile" id="afile" (change)="onChange($event)"/><br>
+          <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".mp3">
           <button class="btn btn-primary btn-lg btn-block login-button" (click)="addNew(newSong.value)">Add</button>
         </div>
       </form>

@@ -20,7 +20,6 @@ import { SongService } from './services/song.service';
 import { AuthGuard } from 'app/services/authguard';
 import { UserComponent } from './user/user.component';
 import { SearchComponent } from './search/search.component';
-import { UlploadService } from  './services/ulpload.service';
 
 
 @NgModule({
@@ -43,7 +42,7 @@ import { UlploadService } from  './services/ulpload.service';
     Routing,
     Ng2FilterPipeModule
   ],
-  providers: [UserService, PlaylistService, GenresService , SongService ,AuthGuard, UlploadService ],
+  providers: [UserService, PlaylistService, GenresService , SongService ,AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

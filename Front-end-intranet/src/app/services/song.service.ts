@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { Song } from './../entities/entities';
+import {ContentType} from "@angular/http/src/enums";
 
 @Injectable()
 export class SongService {
 
   private songsUrl: string = 'http://localhost:8080/app/songs';
   private newSongUrl: string = 'http://localhost:8080/app/newSong';
+  private uploadUrl: string = 'http://localhost:8080/app/upload';
 
   constructor(private http: Http) { }
 
@@ -30,6 +32,29 @@ export class SongService {
         }
       })
       .catch(handleError);
+  }
+
+  fileChange(event) {
+    let fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      let file: File = fileList[0];
+      let formData: FormData = new FormData();
+      formData.append('uploadFile', file, file.name);
+
+      let headers = new Headers();
+      headers.append('Content-Type', 'multipart/form-data');
+      headers.append('Accept', 'application/json');
+
+      let options = new RequestOptions({headers: headers});
+
+      this.http.post(`${this.uploadUrl}`, formData, options)
+        .map(res => res.json())
+        .catch(error => Observable.throw(error))
+        .subscribe(
+          data => console.log('success'),
+          error => console.log(error)
+        )
+    }
   }
 
 }

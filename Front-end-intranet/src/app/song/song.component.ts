@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Playlist , Song } from './../entities/entities';
 import { SongService } from './../services/song.service';
-import { UlploadService } from './../services/ulpload.service';
 import { Observable } from 'rxjs/Observable';
 import {Headers} from "@angular/http";
+import {RequestOptions} from "http";
 
 @Component({
   selector: 'app-song',
@@ -16,24 +16,10 @@ export class SongComponent implements OnInit {
   file : File;
   songlist : Song[];
 
-  constructor(private songService : SongService, private uploadService : UlploadService) {
-    this.uploadService.progress.subscribe(
-      data => {
-        console.log('progress = '+data);
-      });
-  }
+  constructor(private songService : SongService) {  }
 
-  ngOnInit() {
+    ngOnInit() {
     this.loadSongs();
-  }
-
-  onChange(event) {
-    console.log('onChange');
-    var files = event.srcElement.files;
-    console.log(files);
-    this.uploadService.makeFileRequest('http://localhost:8080/app/upload', [], files).subscribe(() => {
-      console.log('sent');
-    });
   }
 
   loadSongs(){
@@ -42,13 +28,16 @@ export class SongComponent implements OnInit {
           err => { console.log(err)});
   }
 
+  fileChange (event : any) {
+    this.songService.fileChange(event);
+  }
+
   addNew(newSong : any) {
     var songRequest : Song = {
       songId : newSong.songId,
       nameSong : newSong.nameSong,
       durationSong : newSong.durationSong,
-      genereN : newSong.genereN,
-      afile : newSong.file
+      genereN : newSong.genereN
     };
     console.log(songRequest);
     this.songService.addNewSong(songRequest).subscribe(
