@@ -106,6 +106,7 @@ public class MainController extends WebMvcConfigurerAdapter {
 		Playlist remove = playlistRepository.findOne(removeRequest.getPlaylistId());
 
 		us.getPlaylists().remove(remove);
+		
 		userRepository.save(us);
 
 		Response r = new Response();
