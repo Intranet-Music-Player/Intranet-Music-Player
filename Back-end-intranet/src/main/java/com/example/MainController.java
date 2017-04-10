@@ -1,5 +1,6 @@
 package com.example;
 import java.io.File;
+import java.io.IOException;
 
 /*04.04.217*/
 import org.springframework.beans.factory.annotation.Autowired;
@@ -221,6 +222,7 @@ public class MainController extends WebMvcConfigurerAdapter {
 		return artistRepository.findAll();
 	}
 
+	
 	/**********************************************************************************/
 	// ALBUM ADD ---> WORKING FINE
 	@GetMapping(path = "/album/add")
@@ -246,33 +248,24 @@ public class MainController extends WebMvcConfigurerAdapter {
 		return albumRepository.findAll();
 	}
 
-	/**********************************************************************************/
+	/**
+	 * @throws IOException 
+	 * @throws IllegalStateException ********************************************************************************/
 	// NEEDS REVISONS
-	@RequestMapping(method = RequestMethod.POST, value = "/upload")
-	public String handleFileUpload(@RequestParam MultipartFile file) {
-		
-		System.err.println(file);
+	@RequestMapping(path = "/upload", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
+	public String uploadFile(@RequestParam("fileUpload") MultipartFile file){
 		return null;
 	}
 	
+	
 	@RequestMapping(path = "/newSong", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
-	public @ResponseBody SongResponse addNewSong(@RequestBody SongRequest songRequest ) {
-//		if (  albumRepository.findByNameAlbum(albumRequest.getNameAlbum()) != null ){
-		
-//		Album album = albumRepository.findByNameAlbum(albumRequest.getNameAlbum());
-//		Song song = songRepository.findByNameSong(songRequest.getNameSong());
-			
-//			if ( album.getAlbumsongs().contains(song)) {
-//				return "ALBUM CONTAINS THE SONG";
-//			
-//			} else {
+	public @ResponseBody SongResponse addNewSong(@RequestBody SongRequest songRequest) {
+
 			SongResponse response = new SongResponse();
 			if ( songRepository.findByNameSong(songRequest.getNameSong()) == null) {
 					
 				Genere owner = genereRepository.findByGenereName(songRequest.getGenereN());
-				System.err.println(songRequest.getAfile());
 				Song newSong = new Song(songRequest.getNameSong(), songRequest.getDurationSong(), owner);
-//				album.addSong(newSong);
 				newSong.setGenere(owner);
 				songRepository.save(newSong);
 				response.setMessage("SONG ADDED");
@@ -295,7 +288,8 @@ public class MainController extends WebMvcConfigurerAdapter {
 	public @ResponseBody Iterable<Song> listAllSong() {
 		return songRepository.findAll();
 	}
-
+	
+	
 	/**********************************************************************************/
 	/**********************************************************************************/
 	// PLAYLIST VALORATION --> WORKING FINE
