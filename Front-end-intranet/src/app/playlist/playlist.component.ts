@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Playlist, Song } from './../entities/entities';
 import { PlaylistService } from './../services/playlist.service';
+import { Overlay } from 'angular2-modal';
+import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 @Component({
   selector: 'app-playlist',
@@ -9,7 +11,7 @@ import { PlaylistService } from './../services/playlist.service';
 })
 export class PlaylistComponent implements OnInit {
   private currentUser: any;
-  playlists: Playlist[];
+  public playlists: Playlist[];
   selectedPlaylist: Playlist;
   selectedSong: Song;
   hideme: any = {};
@@ -18,14 +20,18 @@ export class PlaylistComponent implements OnInit {
   hideShowNewPlaylist() {
     this.hideNewPlaylist = !this.hideNewPlaylist;
   }
-
-  constructor(private playlistService: PlaylistService) { }
+  constructor(private playlistService: PlaylistService, overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal) { }
 
   ngOnInit() {
     this.loadPlaylists();
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
   }
-
+  onClick() {
+    this.modal.alert()
+      .title('Hello World')
+      .body('In Angular 2')
+      .open();
+  }
   loadPlaylists() {
     this.playlistService.getPlaylists()
       .subscribe(
@@ -45,9 +51,9 @@ export class PlaylistComponent implements OnInit {
     this.hideme[this.selectedPlaylist.playlistId] = true;
   }
   following() {
-    var followRequest : any = {
-      playlistId : this.selectedPlaylist.playlistId,
-      userlogin : this.currentUser.userlogin
+    var followRequest: any = {
+      playlistId: this.selectedPlaylist.playlistId,
+      userlogin: this.currentUser.userlogin
     }
     this.playlistService.userFollowPlaylist(followRequest).subscribe();
   }

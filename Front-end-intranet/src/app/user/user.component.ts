@@ -51,6 +51,7 @@ export class UserComponent implements OnInit {
       getUser => {
         this.currentUser = getUser.user;
         this.playlists = this.currentUser.playlists;
+        sessionStorage.setItem("currentUser",JSON.stringify(this.currentUser));
       }
     )
   }

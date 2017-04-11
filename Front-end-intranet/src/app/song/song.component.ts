@@ -1,27 +1,26 @@
-import { Component, OnInit , NgModule } from '@angular/core';
-import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
+import { Component, OnInit, NgModule, ViewContainerRef } from '@angular/core';
 import { Playlist, Song } from './../entities/entities';
 import { SongService } from './../services/song.service';
-import { Observable } from 'rxjs/Observable';
-import { Headers } from "@angular/http";
-
+import { Overlay } from 'angular2-modal';
+import { Modal } from 'angular2-modal/plugins/bootstrap';
+import { PlaylistComponent } from 'app/playlist/playlist.component';
 @Component({
   selector: 'app-song',
   templateUrl: './song.component.html',
   styleUrls: ['./song.component.css']
 })
 export class SongComponent implements OnInit {
-
   file: File;
   namef: string;
   songs: Song[];
-
-  constructor(private songService: SongService) { }
+  playlists: any[];
+  constructor(private songService: SongService, overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal) {
+  }
 
   ngOnInit() {
     this.loadSongs();
+    this.playlists = JSON.parse(sessionStorage.getItem("currentUser")).playlists;
   }
-
   onChange(event: EventTarget) {
     let eventObj: MSInputMethodContext = <MSInputMethodContext>event;
     let target: HTMLInputElement = <HTMLInputElement>eventObj.target;
@@ -55,13 +54,5 @@ export class SongComponent implements OnInit {
   }
   addSongPlaylist(songId: any) {
     console.log("SONG ID " + songId);
-
   }
-
-
-}
-function handleError(error: any) {
-  let errorMsg = error.message || 'ERROR -1-0-1'
-  console.error(errorMsg);
-  return Observable.throw(errorMsg);
 }
