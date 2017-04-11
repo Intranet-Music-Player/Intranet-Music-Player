@@ -3,6 +3,7 @@ import { Playlist, Song } from './../entities/entities';
 import { PlaylistService } from './../services/playlist.service';
 import { UserService } from './../services/user.service';
 import { User } from '../entities/entities';
+import { NgZone } from '@angular/core';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -14,10 +15,9 @@ export class UserComponent implements OnInit {
   selectedPlaylist: Playlist;
   hideme: any = {};
 
-  constructor(private playlistService: PlaylistService, private userService: UserService) { }
+  constructor(private playlistService: PlaylistService, private userService: UserService, private zone: NgZone) { }
   ngOnInit() {
     this.getCurrentUSer();
-    this.playlists = this.currentUser.playlists;
   }
   addNewPlaylist(newPlaylist: any) {
     var playlistResponse: any;
@@ -26,7 +26,7 @@ export class UserComponent implements OnInit {
       userlogin: userlogin,
       playlistName: newPlaylist.name
     }
-    if (newPlaylist.name != null) {
+    if (newPlaylist.name.length !== 0) {
       this.playlistService.addPlaylist(playlistRequest).subscribe(
         playlistResponse => {
           playlistResponse = playlistResponse;
@@ -41,7 +41,6 @@ export class UserComponent implements OnInit {
     } else {
       alert("NAME OF THE PLAYLIST SHOULD HAVE A NAME")
     }
-    location.reload();
   }
   getCurrentUSer() {
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
@@ -64,7 +63,6 @@ export class UserComponent implements OnInit {
     });
     this.hideme[this.selectedPlaylist.playlistId] = true;
   }
- 
   removePlaylist() {
     try {
       var removeRequest: any = {

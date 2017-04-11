@@ -27,12 +27,12 @@ export class PlaylistService {
       .map((response: Response) => response.json())
       .catch(handleError);
   }
-
   removeUserPlaylist(removeRequest: any): Observable<any> {
     return this.http.post(this.removePlaylist, JSON.stringify(removeRequest), { headers: getHeaders() })
       .map((response: Response) => response.json())
       .catch(handleError);
   }
+  
 }
 function handleError(error: any) {
   let errorMsg = error.message || 'ERROR -1-0-1'
