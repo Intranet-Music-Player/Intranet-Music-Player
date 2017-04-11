@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+<<<<<<< HEAD
 
 import { Song } from './../entities/entities';
 import {ContentType} from "@angular/http/src/enums";
+=======
+import { Song } from 'app/entities/entities';
+>>>>>>> 4024d0caa0aa69c148860d650205eb77cf24f1c3
 
 @Injectable()
 export class SongService {

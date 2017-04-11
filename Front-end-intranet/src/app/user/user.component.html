@@ -1,7 +1,23 @@
 <div class="container-fluid">
-  <h3>USER PAGE</h3>
-  <h4>MY PLAYLISTS</h4>
-  <ul>
-    <li *ngFor="let playlist of playlists">{{playlist.playlistName}}</li>
-  </ul>
+  <h4>MY HOME PAGE</h4>
+  <div class="col-md-4 col-lg-4 col-sm-4">
+    <ul>
+      <h4>MY PLAYLISTS</h4>
+      <li class="list-group-item">
+        <form #newP="ngForm">
+          <input type="text" placeholder="New playlist name" name="name" class="input-circle" ngModel required style="width: 65%" />
+          <button type="button" class="btn btn-default btn-circle pull-right action-buttons" (click)="addNewPlaylist(newP.value)" style="width: 30%">ADD</button>
+        </form>
+      </li>
+      <li class="list-group-item" *ngFor="let playlist of playlists" (click)="onSelectPlaylist(playlist);">
+        <label style="width: 70%"> {{playlist.playlistName}} </label>
+        <div class="pull-right action-buttons" style="width: 30%">
+          <button type="button" class="btn btn-danger btn-circle" (click)="removePlaylist()" style="width: 100%">REMOVE</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div>
+    <label>{{selectedPlaylist?.playlistName}}</label>
+  </div>
 </div>

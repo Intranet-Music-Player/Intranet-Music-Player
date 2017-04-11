@@ -20,8 +20,13 @@
     "@angular/platform-browser": "^2.3.1",
     "@angular/platform-browser-dynamic": "^2.3.1",
     "@angular/router": "^3.3.1",
+    "angular2-modal": "^2.0.3",
     "core-js": "^2.4.1",
+<<<<<<< HEAD
     "ng2-file-upload": "^1.2.1",
+=======
+    "ng2-bs3-modal": "^0.10.4",
+>>>>>>> 4024d0caa0aa69c148860d650205eb77cf24f1c3
     "ng2-filter-pipe": "^0.1.7",
     "ng2-search-filter": "^0.1.8",
     "rxjs": "^5.0.1",

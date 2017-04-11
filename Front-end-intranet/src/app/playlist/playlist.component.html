@@ -1,23 +1,18 @@
 <div class="container-fluid">
   <h3>PLAYLIST PAGE</h3>
-</div>
-
-<div class="container-fluid">
-  <ul>
-    <li *ngFor="let playlist of playlists">
-      <h4 class="title" (click)="onSelectPlaylist(playlist); hideme[playlist.playlistId] = ! hideme[playlist.playlistId]">
-        <span><img src="http://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/512/Music-icon.png" height="75" width="75"></span>{{playlist.playlistName}}
-        <span class="badge">{{playlist.songs.length}}</span></h4>
-      <div [hidden]="!hideme[playlist.playlistId]">
-        <ul>
-          <li *ngFor="let song of playlist.songs" style="margin-left: 2cm;">
-            <h4 (click)="onSelectSong(song)"> {{song.nameSong}} </h4>
-            <audio controls>
-              <source src="app/song/{{song.nameSong}}" type="audio/mpeg">
-            </audio>
-          </li>
-        </ul>
-      </div>
-    </li>
-  </ul>
+  <div class="col-md-3 col-lg-3">
+    <ul>
+      <li class="list-group-item" *ngFor="let playlist of playlists" (click)="onSelectPlaylist(playlist); hideme[playlist.playlistId] = ! hideme[playlist.playlistId]">
+        <label> {{playlist.playlistName}} </label>
+        <div class="pull-right action-buttons">
+          <button type="button" class="btn btn-danger btn-circle" (click)="following()">FOLLOW</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-9 col-lg-9">
+    <div class="panel-heading" style="background-color: steelblue ; height: 45px; color: white">
+      <h4> {{selectedPlaylist?.playlistName | uppercase}} </h4>
+    </div>
+  </div>
 </div>

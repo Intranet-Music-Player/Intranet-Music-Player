@@ -15,7 +15,6 @@ export class GenresService {
       .map((res: Response) => res.json())
       .catch(handleError)
   }
-
 }
 
 function getHeaders() {

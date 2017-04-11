@@ -2,15 +2,30 @@
   <div class="row">
     <div class="col-md-3 col-lg-3 col-sm-3">
       <h4>SEARCH PLAYLIST NAME</h4>
-      <div class="input-group stylish-input-group">
-        <input type="text" class="form-control" [(ngModel)]="valor.playlistName" placeholder="Search">
-        <span class="input-group-addon">
-           <button type="submit"><span class="glyphicon glyphicon-search"></span>
-        </button>
-        </span>
+      <div class="row-content">
+        <div class="input-group stylish-input-group">
+          <input type="text" class="form-control" [(ngModel)]="valor.playlistName" placeholder="Search">
+          <span class="input-group-addon"><button type="submit"><span class="glyphicon glyphicon-search"></span>
+          </button>
+          </span>
+        </div>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+            Filter by ..
+            </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" (click)="filterBy('playlists')">Playlists</a><br>
+            <a class="dropdown-item" (click)="filterBy('songs')">Songs</a><br>
+            <a class="dropdown-item" (click)="filterBy('albums')">Albums</a><br>
+            <a class="dropdown-item" (click)="filterBy('artist')">Artists</a><br>
+          </div>
+        </div>
+
       </div>
-      <ul>
-        <li *ngFor="let playlist of playlists  | filterBy: valor"> {{ playlist.playlistName }} </li>
+
+      <ul class="list-group">
+        <li *ngFor="let playlist of playlists| filterBy: valor" class="list-group-item"> {{ playlist.playlistName }} </li>
+        <li *ngFor="let song of songs | filterBy: valor" class="list-group-item"> {{ song.nameSong }} <span class="glyphicon glyphicon-music"></span> </li>
       </ul>
     </div>
     <div class="col-md-9 col-lg-9 col-sm-9">
@@ -21,9 +36,6 @@
         non. Ipsum quia ad repellendus molestiae? Unde inventore eos reprehenderit quam deleniti repudiandae dolor, ea.</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta quos sint id sequi ab natus amet dolore facere, tempore
         inventore ducimus ut quidem, nisi non sed et perspiciatis placeat minus.</p>
-
     </div>
-
-
   </div>
 </div>

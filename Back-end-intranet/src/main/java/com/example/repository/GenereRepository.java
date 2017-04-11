@@ -6,5 +6,5 @@ import com.example.entities.Genere;
 
 public interface GenereRepository extends CrudRepository<Genere, Long> {
 
-	Genere findByGenereName(String genereName);
+	Genere findByGenereName(String name);
 }

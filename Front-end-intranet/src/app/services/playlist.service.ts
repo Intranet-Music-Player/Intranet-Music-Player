@@ -7,8 +7,9 @@ import { Playlist } from './../entities/entities';
 export class PlaylistService {
 
   private playlistUrl: string = 'http://localhost:8080/app/playlists';
-  private playistNew: string = 'http://localhost:8080/app/newPlaylist';
-  private searchUrl: string = 'http://localhost:8080/app/search';
+  private playistNew: string = 'http://localhost:8080/app/playlist/add';
+  private followPlaylist: string = 'http://localhost:8080/app/followPlaylist';
+  private removePlaylist: string = 'http://localhost:8080/app/removePlaylist';
   constructor(private http: Http) { }
 
   getPlaylists(): Observable<Playlist[]> {
@@ -16,13 +17,22 @@ export class PlaylistService {
       .map((res: Response) => res.json())
       .catch(handleError)
   }
-
-  searchData(searchValue: string): Observable<Response> {
-    return this.http.post(this.searchUrl, JSON.stringify(searchValue) , { headers: getHeaders() })
+  addPlaylist(newPlaylist: any): Observable<any> {
+    return this.http.post(this.playistNew, JSON.stringify(newPlaylist), { headers: getHeaders() })
       .map((response: Response) => response.json())
       .catch(handleError);
   }
-
+  userFollowPlaylist(followRequest: any): Observable<any> {
+    return this.http.post(this.followPlaylist, JSON.stringify(followRequest), { headers: getHeaders() })
+      .map((response: Response) => response.json())
+      .catch(handleError);
+  }
+  removeUserPlaylist(removeRequest: any): Observable<any> {
+    return this.http.post(this.removePlaylist, JSON.stringify(removeRequest), { headers: getHeaders() })
+      .map((response: Response) => response.json())
+      .catch(handleError);
+  }
+  
 }
 function handleError(error: any) {
   let errorMsg = error.message || 'ERROR -1-0-1'

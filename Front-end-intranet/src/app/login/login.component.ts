@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
-
+import { Response } from '@angular/http';
 import { User } from '../entities/entities';
 import { Observable } from 'rxjs/Rx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,8 @@ import { Observable } from 'rxjs/Rx';
 })
 export class LoginComponent implements OnInit {
   currentUser: User;
-  constructor(private userService: UserService) {
+  checkLoginResponse: any;
+  constructor(private userService: UserService, private router: Router) {
 
   }
 
@@ -19,7 +21,18 @@ export class LoginComponent implements OnInit {
   }
 
   checkLogin(login: User) {
-    this.userService.checkUserLogin(login).subscribe()
+    this.userService.checkUserLogin(login).subscribe(
+      checkuserLogin => {
+        this.checkLoginResponse = checkuserLogin;
+        console.log(this.checkLoginResponse.success);
+        if (this.checkLoginResponse.success == true) {
+          sessionStorage.setItem("currentUser", JSON.stringify(this.checkLoginResponse.user));
+          this.router.navigate(['home','user']);
+        } else {
+          alert(this.checkLoginResponse.message);
+        }
+      }
+    );
   }
 
 }
