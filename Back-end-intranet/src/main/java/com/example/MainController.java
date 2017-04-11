@@ -247,13 +247,11 @@ public class MainController extends WebMvcConfigurerAdapter {
 	public @ResponseBody Iterable<Album> listAllAlbum() {
 		return albumRepository.findAll();
 	}
-
-	/**
-	 * @throws IOException 
-	 * @throws IllegalStateException ********************************************************************************/
-	// NEEDS REVISONS
-	@RequestMapping(path = "/upload", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
-	public String uploadFile(@RequestParam("fileUpload") MultipartFile file){
+	
+	@RequestMapping(path="/upload", method = RequestMethod.POST)
+	public String uploadFile(@RequestBody MultipartFile upload){
+		System.err.println(upload);
+		System.out.println("HOHOHOHOHOHOH");
 		return null;
 	}
 	

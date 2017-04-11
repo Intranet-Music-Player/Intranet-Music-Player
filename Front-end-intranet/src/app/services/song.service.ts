@@ -42,7 +42,7 @@ export class SongService {
       formData.append('uploadFile', file, file.name);
 
       let headers = new Headers();
-      headers.append('Content-Type', 'multipart/form-data');
+      headers.append('Content-Type', 'multipart/form-data, boundary=HereGoes');
       headers.append('Accept', 'application/json');
 
       let options = new RequestOptions({headers: headers});

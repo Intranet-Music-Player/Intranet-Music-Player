@@ -1,7 +1,9 @@
 <div style="padding-top: 75px; padding-right: 30px; padding-bottom: 50px; padding-left: 50px;">
   <ul style="list-style: none">
     <li *ngFor="let song of songs">
-      <span><img src="http://cache2.macintoshhowto.com/wp-content/uploads/2010/11/itunes.png" style="height: 25px; width: 25px"/></span> Song Name: <i><b>{{song.nameSong}}</b></i>     Song Duration: <i><b>{{song.durationSong}}</b></i>     Genere: <i><b>{{song.genere.genereName}}</b></i><br>
+      <span><img src="http://cache2.macintoshhowto.com/wp-content/uploads/2010/11/itunes.png"
+                 style="height: 25px; width: 25px"/></span> Song Name: <i><b>{{song.nameSong}}</b></i> Song Duration:
+      <i><b>{{song.durationSong}}</b></i> Genere: <i><b>{{song.genere.genereName}}</b></i><br>
       <audio controls>
         <source src="app/Tracks/{{song.nameSong}}" type="audio/mpeg">
       </audio>
@@ -21,7 +23,8 @@
             <div class="cols-sm-10">
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                <input type="text"  class="form-control" name="nameSong" id="nameSong" placeholder="Select File .mp3" ngModel required/>
+                <input type="text" class="form-control" name="nameSong" id="nameSong" placeholder="Select File .mp3"
+                       ngModel required/>
               </div>
             </div>
           </div>
@@ -32,7 +35,8 @@
             <div class="cols-sm-10">
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                <input type="text" class="form-control" name="durationSong" id="durationSong"  placeholder="Duration" ngModel required/>
+                <input type="text" class="form-control" name="durationSong" id="durationSong" placeholder="Duration"
+                       ngModel required/>
               </div>
             </div>
           </div>
@@ -59,8 +63,10 @@
           </div>
         </div>
         <div class="form-group ">
-          <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".mp3">
-          <button class="btn btn-primary btn-lg btn-block login-button" (click)="addNew(newSong.value)">Add</button>
+          <div class="col-md-3">
+              <input type="file" (change)="fileChange($event)" placeholder="fileUpload" accept=".mp3">
+              <button class="btn btn-primary btn-lg btn-block login-button" (click)="addNew(newSong.value)">Add</button>
+          </div>
         </div>
       </form>
     </div>
