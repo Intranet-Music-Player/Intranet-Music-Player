@@ -5,6 +5,7 @@
       <audio controls>
         <source src="app/Tracks/{{song.nameSong}}" type="audio/mpeg">
       </audio>
+      <button (click)="addSongPlaylist(song.songId)" class="btn btn-primary btn-success"><span class="glyphicon glyphicon-plus">ADD</span></button>
       <br>
       <br>
     </li>

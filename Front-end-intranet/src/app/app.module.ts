@@ -21,7 +21,6 @@ import { AuthGuard } from 'app/services/authguard';
 import { UserComponent } from './user/user.component';
 import { SearchComponent } from './search/search.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

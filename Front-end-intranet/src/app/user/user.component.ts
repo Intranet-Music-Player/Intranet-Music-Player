@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Playlist, Song } from './../entities/entities';
 import { PlaylistService } from './../services/playlist.service';
 import { UserService } from './../services/user.service';
 import { User } from '../entities/entities';
-import { NgZone } from '@angular/core';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
+
   private currentUser: any;
   private playlists: Playlist[];
   selectedPlaylist: Playlist;
   hideme: any = {};
 
-  constructor(private playlistService: PlaylistService, private userService: UserService, private zone: NgZone) { }
+  constructor(private playlistService: PlaylistService, private userService: UserService) { }
   ngOnInit() {
     this.getCurrentUSer();
   }

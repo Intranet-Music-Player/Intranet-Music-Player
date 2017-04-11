@@ -1,8 +1,8 @@
 <div class="login-page">
   <div class="form">
     <form #login="ngForm" class="login-form">
-      <input type="text" placeholder="username" name="userlogin" ngModel required/>
-      <input type="password" placeholder="password" name="password" ngModel required/>
+      <input type="text" placeholder="username" name="userlogin" value="utman" ngModel required/>
+      <input type="password" placeholder="password" name="password" value="utman" ngModel required/>
       <button (click)="checkLogin(login.value)">login</button>
       <p class="message">Not registered? <a routerLink="/registration">Create an account</a></p>
     </form>
