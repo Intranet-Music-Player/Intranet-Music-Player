@@ -10,6 +10,7 @@ export class PlaylistService {
   private playistNew: string = 'http://localhost:8080/app/playlist/add';
   private followPlaylist: string = 'http://localhost:8080/app/followPlaylist';
   private removePlaylist: string = 'http://localhost:8080/app/removePlaylist';
+  private removeSongPUrl : string ='http://localhost:8080/app/removeSongPlaylist';
   constructor(private http: Http) { }
 
   getPlaylists(): Observable<Playlist[]> {
@@ -22,7 +23,6 @@ export class PlaylistService {
       .map((response: Response) => response.json())
       .catch(handleError);
   }
-
   userFollowPlaylist(followRequest: any): Observable<any> {
     return this.http.post(this.followPlaylist, JSON.stringify(followRequest), { headers: getHeaders() })
       .map((response: Response) => response.json())
@@ -32,6 +32,11 @@ export class PlaylistService {
     return this.http.post(this.removePlaylist, JSON.stringify(removeRequest), { headers: getHeaders() })
       .map((response: Response) => response.json())
       .catch(handleError);
+  }
+  removeSongPlaylist(removeSongP : any): Observable<any>{
+    return this.http.post(this.removeSongPUrl, JSON.stringify(removeSongP),  { headers: getHeaders() })
+    .map((response : Response) => response.json())
+    .catch(handleError);
   }
   
 }

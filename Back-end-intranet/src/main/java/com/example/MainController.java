@@ -141,16 +141,28 @@ public class MainController extends WebMvcConfigurerAdapter {
 	@RequestMapping(path = "/addSongToPlaylist", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
 	public @ResponseBody Response addSongToPlaylist(@RequestBody PlaylistRequest songToPlaylist) {
 		Response r = new Response();
-		
+
 		Playlist p = playlistRepository.findOne(songToPlaylist.getPlaylistId());
 		Song s = songRepository.findOne(songToPlaylist.getSongId());
-		if (p.getSongs().contains(s)){
+		if (p.getSongs().contains(s)) {
 			r.setMessage("SONG ALREADY EXIST IN THIS PLAYLIST");
 		} else {
 			p.addSong(s);
 			playlistRepository.save(p);
 			r.setMessage("SONG ADDED TO PLAYLIST");
 		}
+		return r;
+	}
+
+	@RequestMapping(path = "/removeSongPlaylist", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
+	private @ResponseBody Response removeSongPlaylist(@RequestBody PlaylistRequest removeSong) {
+		Response r = new Response();
+		System.out.println("PLAYLIST ID : " + removeSong.getPlaylistId() + " SONG ID : " + removeSong.getSongId());
+		Playlist p = playlistRepository.findOne(removeSong.getPlaylistId());
+		Song s = songRepository.findOne(removeSong.getSongId());
+		p.getSongs().remove(s);
+		playlistRepository.save(p);
+		r.setMessage("SONG DELETED SUCCESFULLY");
 		return r;
 	}
 
