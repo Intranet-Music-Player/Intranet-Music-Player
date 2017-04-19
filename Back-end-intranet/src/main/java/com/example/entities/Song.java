@@ -1,5 +1,7 @@
 package com.example.entities;
 
+import java.io.File;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +27,7 @@ public class Song {
 	@JsonManagedReference
 	@ManyToOne(cascade=CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name="GENERE_ID")
-	private Genere genere;
+	private Genere genere; 
 
 	public Song(Song song) {
 		this.nameSong= song.getNameSong();
@@ -76,5 +78,5 @@ public class Song {
 //	public void addPlaylist (Playlist playlist) {
 //		songplaylist.add(playlist);
 //	}
-	
+
 }

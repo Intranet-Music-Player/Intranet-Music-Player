@@ -4,6 +4,7 @@ import { SongService } from './../services/song.service';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { PlaylistComponent } from 'app/playlist/playlist.component';
+
 @Component({
   selector: 'app-song',
   templateUrl: './song.component.html',
@@ -14,9 +15,12 @@ export class SongComponent implements OnInit {
   namef: string;
   songs: Song[];
   playlists: any[];
-  constructor(private songService: SongService, overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal) {
-  }
+  songIdVal: any;
+  addMessage: any;
 
+  constructor(private songService: SongService, overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal) {
+    overlay.defaultViewContainer = vcRef;
+  }
   ngOnInit() {
     this.loadSongs();
     this.playlists = JSON.parse(sessionStorage.getItem("currentUser")).playlists;
@@ -37,6 +41,11 @@ export class SongComponent implements OnInit {
     this.songService.getSongs().subscribe(
       songs => this.songs = songs,
       err => { console.log(err) });
+    console.log(this.songs);
+  }
+
+  fileChange(event: any) {
+    this.songService.fileChange(event);
   }
 
   addNew(newSong: any) {
@@ -46,13 +55,34 @@ export class SongComponent implements OnInit {
       durationSong: newSong.durationSong,
       genereN: newSong.genereN
     };
-
+    console.log(songRequest);
     this.songService.addNewSong(songRequest).subscribe(
       err => { console.log(err); }
-    )
-
+    );
   }
-  addSongPlaylist(songId: any) {
-    console.log("SONG ID " + songId);
+  songId(songId: any) {
+    this.songIdVal = songId;
+  }
+  addSongPlaylist(playlistId: any) {
+    var songPRequest: any = {
+      songId: this.songIdVal,
+      playlistId: playlistId
+    }
+
+    var removeSongResponse: any;
+    this.songService.addSongToPlaylist(songPRequest).subscribe(
+      getRemoveResponse => {
+        removeSongResponse = getRemoveResponse;
+        this.addMessage = removeSongResponse.message;
+        /*---------------------------------------------------*/ 
+        this.modal.alert()
+          .size('lg')
+          .showClose(true)
+          .title('A simple Alert style modal window')
+          .body(this.addMessage)
+          .open();
+        /*---------------------------------------------------*/          
+      }
+    );
   }
 }

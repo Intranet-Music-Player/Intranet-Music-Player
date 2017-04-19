@@ -1,5 +1,7 @@
 package com.example.requsest;
 
+import java.io.File;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -26,12 +26,6 @@ export class PlaylistComponent implements OnInit {
     this.loadPlaylists();
     this.currentUser = JSON.parse(sessionStorage.getItem("currentUser"));
   }
-  onClick() {
-    this.modal.alert()
-      .title('Hello World')
-      .body('In Angular 2')
-      .open();
-  }
   loadPlaylists() {
     this.playlistService.getPlaylists()
       .subscribe(

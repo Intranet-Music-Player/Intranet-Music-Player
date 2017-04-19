@@ -7,15 +7,19 @@ public class PlaylistRequest {
 	private Long playlistId;
 	private String name;
 	private String userlogin;
+	private Long songId;
 
 	@JsonCreator
 	public PlaylistRequest(	@JsonProperty("playlistId") Long playlistId,
 							@JsonProperty("playlistName") String name,
-							@JsonProperty("userlogin") String userlogin) {
+							@JsonProperty("userlogin") String userlogin, 
+							@JsonProperty("songId") Long songId) {
+		
 		super();
 		this.playlistId = playlistId;
 		this.name = name;
 		this.userlogin = userlogin;
+		this.songId = songId;
 	}
 
 	public Long getPlaylistId() {
@@ -40,5 +44,13 @@ public class PlaylistRequest {
 
 	public void setUserlogin(String userlogin) {
 		this.userlogin = userlogin;
+	}
+
+	public Long getSongId() {
+		return songId;
+	}
+
+	public void setSongId(Long songId) {
+		this.songId = songId;
 	}
 }

@@ -22,6 +22,7 @@ export class PlaylistService {
       .map((response: Response) => response.json())
       .catch(handleError);
   }
+
   userFollowPlaylist(followRequest: any): Observable<any> {
     return this.http.post(this.followPlaylist, JSON.stringify(followRequest), { headers: getHeaders() })
       .map((response: Response) => response.json())

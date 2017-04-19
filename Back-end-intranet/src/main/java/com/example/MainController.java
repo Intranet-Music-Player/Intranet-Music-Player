@@ -1,5 +1,8 @@
 package com.example;
 
+import java.io.File;
+import java.io.IOException;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 import java.util.ArrayList;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -106,7 +110,7 @@ public class MainController extends WebMvcConfigurerAdapter {
 		Playlist remove = playlistRepository.findOne(removeRequest.getPlaylistId());
 
 		us.getPlaylists().remove(remove);
-		
+
 		userRepository.save(us);
 
 		Response r = new Response();
@@ -132,6 +136,22 @@ public class MainController extends WebMvcConfigurerAdapter {
 			return r;
 		}
 
+	}
+
+	@RequestMapping(path = "/addSongToPlaylist", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
+	public @ResponseBody Response addSongToPlaylist(@RequestBody PlaylistRequest songToPlaylist) {
+		Response r = new Response();
+		
+		Playlist p = playlistRepository.findOne(songToPlaylist.getPlaylistId());
+		Song s = songRepository.findOne(songToPlaylist.getSongId());
+		if (p.getSongs().contains(s)){
+			r.setMessage("SONG ALREADY EXIST IN THIS PLAYLIST");
+		} else {
+			p.addSong(s);
+			playlistRepository.save(p);
+			r.setMessage("SONG ADDED TO PLAYLIST");
+		}
+		return r;
 	}
 
 	@RequestMapping(path = "/users", method = RequestMethod.GET, produces = "Application/json")
@@ -172,35 +192,6 @@ public class MainController extends WebMvcConfigurerAdapter {
 			r.setSuccess(false);
 			return r;
 		}
-		// if (playlistRepository.findByName(playlistName) != null) {
-		// Playlist newPlay = playlistRepository.findByName(playlistName);
-		//
-		// // Song song = songRepository.findByNameSong(nameSong);
-		// // song.addPlaylist(newPlay);
-		// User owner = userRepository.findByUserlogin(userlogin);
-		// if (owner != null) {
-		// owner.addPlaylist(newPlay);
-		// playlistRepository.save(newPlay);
-		// return "YOU ARE FOLLOWING A PLAYLIST";
-		// } else {
-		// return "USER DON'T EXISTS";
-		// }
-		//
-		// } else {
-		//
-		// Playlist newPlay = new Playlist();
-		//
-		// newPlay.setPlaylistName(playlistName);
-		// // newPlay.setPlaylistDuration(duration);
-		// // Song song = songRepository.findByNameSong(nameSong);
-		// // song.addPlaylist(newPlay);
-		// User owner = userRepository.findByUserlogin(userlogin);
-		// owner.addPlaylist(newPlay);
-		// playlistRepository.save(newPlay);
-		//
-		// return "NEW PLAYLIST ADDED";
-		// }
-
 	}
 
 	// PLAYLIST LIST ---> WORKING FINE
@@ -307,27 +298,21 @@ public class MainController extends WebMvcConfigurerAdapter {
 		return albumRepository.findAll();
 	}
 
-	/**********************************************************************************/
-	// NEEDS REVISONS
+	@RequestMapping(path = "/upload", method = RequestMethod.POST)
+	public String uploadFile(@RequestBody MultipartFile upload) {
+		System.err.println(upload);
+		System.out.println("HOHOHOHOHOHOH");
+		return null;
+	}
+
 	@RequestMapping(path = "/newSong", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
 	public @ResponseBody SongResponse addNewSong(@RequestBody SongRequest songRequest) {
-		// if ( albumRepository.findByNameAlbum(albumRequest.getNameAlbum()) !=
-		// null ){
 
-		// Album album =
-		// albumRepository.findByNameAlbum(albumRequest.getNameAlbum());
-		// Song song = songRepository.findByNameSong(songRequest.getNameSong());
-
-		// if ( album.getAlbumsongs().contains(song)) {
-		// return "ALBUM CONTAINS THE SONG";
-		//
-		// } else {
 		SongResponse response = new SongResponse();
 		if (songRepository.findByNameSong(songRequest.getNameSong()) == null) {
 
 			Genere owner = genereRepository.findByGenereName(songRequest.getGenereN());
 			Song newSong = new Song(songRequest.getNameSong(), songRequest.getDurationSong(), owner);
-			// album.addSong(newSong);
 			newSong.setGenere(owner);
 			songRepository.save(newSong);
 			response.setMessage("SONG ADDED");
@@ -340,10 +325,6 @@ public class MainController extends WebMvcConfigurerAdapter {
 			response.setSuccess(false);
 			return response;
 		}
-		// }
-		// } else {
-		// return " ALBUM DOESN'T EXIST";
-		// }
 	}
 
 	@RequestMapping(path = "/songs", method = RequestMethod.GET, produces = "Application/json")
@@ -396,8 +377,4 @@ public class MainController extends WebMvcConfigurerAdapter {
 		}
 	}
 
-	// WE CAN ADD SOME OTHER EXTRAS LIKE
-	// ADD ALBUM TO PLAYLIST
-	// VALORATION TO SONG ( we now have valoration in playlist )
-	// ...
 }

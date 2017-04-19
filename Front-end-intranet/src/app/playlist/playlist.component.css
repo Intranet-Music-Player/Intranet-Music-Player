@@ -61,3 +61,16 @@ ul {
   line-height: 1.428571429;
   border-radius: 10px;
 }
+.list-container {
+    width: 100%;
+    min-height: 440px;
+    height: auto;
+    position: absolute;
+    top: 0; 
+    bottom: 0;
+}
+
+.dx-list-item-content > div {
+    padding: 5px;
+    font-size: 15px;
+}
