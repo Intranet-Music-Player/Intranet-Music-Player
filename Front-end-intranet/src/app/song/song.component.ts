@@ -1,5 +1,5 @@
-import { Component, OnInit , NgModule } from '@angular/core';
-import { Playlist, Song } from './../entities/entities';
+import { Component, OnInit } from '@angular/core';
+import { Song } from './../entities/entities';
 import { SongService } from './../services/song.service';
 import { Observable } from 'rxjs/Observable';
 
@@ -10,19 +10,18 @@ import { Observable } from 'rxjs/Observable';
 })
 export class SongComponent implements OnInit {
 
-  songs : Song;
-  file : File;
-  songlist : Song[];
+  songs : Song[];
+  song : Song;
 
   constructor(private songService: SongService) { }
 
-    ngOnInit() {
+  ngOnInit() {
     this.loadSongs();
   }
 
   loadSongs(){
     this.songService.getSongs().subscribe(
-          songs => this.songlist = songs ,
+          songs => this.songs = songs ,
           err => { console.log(err)});
   }
 
@@ -43,6 +42,7 @@ export class SongComponent implements OnInit {
     );
 
   }
+
   addSongPlaylist(songId: any) {
     console.log("SONG ID " + songId);
 

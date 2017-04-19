@@ -41,14 +41,14 @@ export class SongService {
       formData.append('uploadFile', file, file.name);
 
       let headers = new Headers();
-      headers.append('Content-Type', 'multipart/form-data, boundary=HereGoes');
-      headers.append('Accept', 'application/json');
+      headers.append("enctype", "multipart/form-data");
+    //  headers.append('Accept', 'application/json');
 
       let options = new RequestOptions({headers: headers});
 
       this.http.post(`${this.uploadUrl}`, formData, options)
         .map(res => res.json())
-        .catch(error => Observable.throw(error))
+        //.catch(error => Observable.throw(error))
         .subscribe(
           data => console.log('success'),
           error => console.log(error)

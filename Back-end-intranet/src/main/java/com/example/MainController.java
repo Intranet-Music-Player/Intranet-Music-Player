@@ -1,16 +1,12 @@
 package com.example;
 
-import java.io.File;
 import java.io.IOException;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 
-/*04.04.217*/
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,17 +19,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.example.entities.*;
 import com.example.repository.*;
-import com.example.requsest.PlaylistRequest;
-import com.example.requsest.SongRequest;
-import com.example.requsest.UserRequest;
-import com.example.responses.UserResponse;
+import com.example.requsest.*;
 import com.example.responses.*;
+
 
 @Controller
 @EnableWebMvc
 @RequestMapping(path = "/app")
-public class MainController extends WebMvcConfigurerAdapter {
-	// KO B
+public class MainController extends SpringBootServletInitializer  {
+
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
@@ -51,7 +45,6 @@ public class MainController extends WebMvcConfigurerAdapter {
 	@Autowired
 	private ValorationRepository valorationRepository;
 
-	// USER ADD ---> WORKING FINE
 	@RequestMapping(path = "/registration", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
 	public @ResponseBody UserResponse addNewUser(@RequestBody UserRequest userRequest) {
 		UserResponse response = new UserResponse();
@@ -155,7 +148,7 @@ public class MainController extends WebMvcConfigurerAdapter {
 	}
 
 	/**********************************************************************************/
-	// PLAYLIST ADD ---> WORKING FINE
+	
 	@RequestMapping(path = "/playlist/add", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
 	public @ResponseBody Response addNewPlaylist(@RequestBody PlaylistRequest playlistRequest) {
 		Response r = new Response();
@@ -178,14 +171,13 @@ public class MainController extends WebMvcConfigurerAdapter {
 		}
 	}
 
-	// PLAYLIST LIST ---> WORKING FINE
 	@RequestMapping(path = "/playlists", method = RequestMethod.GET, produces = "Application/json")
 	public @ResponseBody Iterable<Playlist> listAllPlaylist() {
 		return playlistRepository.findAll();
 	}
 
 	/**********************************************************************************/
-	// GENERE ADD ---> WORKING FINE
+	
 	@GetMapping(path = "/genere/add")
 	public @ResponseBody String addNewGenere(@RequestParam String genereName) {
 
@@ -199,14 +191,14 @@ public class MainController extends WebMvcConfigurerAdapter {
 		}
 	}
 
-	// GENERE LIST WORKING FINE
+
 	@RequestMapping(path = "/generes", method = RequestMethod.GET, produces = "Application/json")
 	public @ResponseBody Iterable<Genere> listAllGeneres() {
 		return genereRepository.findAll();
 	}
 
 	/**********************************************************************************/
-	// BAND ADD ---> WORKING FINE
+
 	@GetMapping(path = "/band/add")
 	public @ResponseBody String addNewBand(@RequestParam String name) {
 
@@ -221,14 +213,13 @@ public class MainController extends WebMvcConfigurerAdapter {
 
 	}
 
-	// BAND LIST ---> WORKING FINE
 	@RequestMapping(path = "/bands", method = RequestMethod.GET, produces = "Application/json")
 	public @ResponseBody Iterable<Band> listAllBands() {
 		return bandRepository.findAll();
 	}
 
 	/**********************************************************************************/
-	// ARTIST ADD ---> WORKING FINE
+
 	@GetMapping(path = "/artist/add")
 	public @ResponseBody String addNewArtist(@RequestParam String bandName, @RequestParam String name,
 			@RequestParam String birth) {
@@ -251,15 +242,13 @@ public class MainController extends WebMvcConfigurerAdapter {
 		}
 	}
 
-	// ARTIST LIST ---> WORKING FINE
 	@RequestMapping(path = "/artists", method = RequestMethod.GET, produces = "Application/json")
 	public @ResponseBody Iterable<Artist> listAllArtist() {
 		return artistRepository.findAll();
 	}
 
-	
 	/**********************************************************************************/
-	// ALBUM ADD ---> WORKING FINE
+	
 	@GetMapping(path = "/album/add")
 	public @ResponseBody String addNewAlbum(@RequestParam String nameAlbum, @RequestParam String datePub,
 			@RequestParam String bandName) {
@@ -277,19 +266,20 @@ public class MainController extends WebMvcConfigurerAdapter {
 		}
 	}
 
-	// ALBUM LIST ---> WORKING FINE
 	@GetMapping(path = "albums")
 	public @ResponseBody Iterable<Album> listAllAlbum() {
 		return albumRepository.findAll();
 	}
+
+	/**********************************************************************************/
 	
-	@RequestMapping(path="/upload", method = RequestMethod.POST)
-	public String uploadFile(@RequestBody MultipartFile upload){
-		System.err.println(upload);
+	@RequestMapping(path="/upload", method = RequestMethod.POST, consumes = "multipart/form-data")
+	public void uploadFiles(@RequestBody MultipartFile uploadFile){
+		System.out.println("dades fitxer");
+		System.out.println(uploadFile.getName());
+		System.out.println(uploadFile.getSize());
 		System.out.println("HOHOHOHOHOHOH");
-		return null;
 	}
-	
 	
 	@RequestMapping(path = "/newSong", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
 	public @ResponseBody SongResponse addNewSong(@RequestBody SongRequest songRequest) {
@@ -318,10 +308,8 @@ public class MainController extends WebMvcConfigurerAdapter {
 		return songRepository.findAll();
 	}
 	
+	/**********************************************************************************/
 	
-	/**********************************************************************************/
-	/**********************************************************************************/
-	// PLAYLIST VALORATION --> WORKING FINE
 	@GetMapping(path = "/playlist/valoration")
 	public @ResponseBody String valoratePlaylist(@RequestParam String userlogin, @RequestParam String playlistName,
 			@RequestParam Long points) {
@@ -338,7 +326,6 @@ public class MainController extends WebMvcConfigurerAdapter {
 
 	}
 
-	// ADD SONGS TO PLAYLIST --->WORKING FINE
 	@GetMapping(path = "/playlist/addSong")
 	public @ResponseBody String addSongPlaylist(@RequestParam String playlistName, @RequestParam String songName) {
 
