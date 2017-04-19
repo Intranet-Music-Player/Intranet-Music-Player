@@ -298,44 +298,14 @@ public class MainController extends WebMvcConfigurerAdapter {
 	public @ResponseBody Iterable<Album> listAllAlbum() {
 		return albumRepository.findAll();
 	}
-<<<<<<< HEAD
 
-	@RequestMapping(path = "/upload", method = RequestMethod.POST)
-	public String uploadFile(@RequestBody MultipartFile upload) {
-=======
-	
 	@RequestMapping(path="/upload", method = RequestMethod.POST)
 	public String uploadFile(@RequestBody MultipartFile upload){
->>>>>>> d0360986bf72bfb389ebfe216c760a7f2733ec16
 		System.err.println(upload);
 		System.out.println("HOHOHOHOHOHOH");
 		return null;
 	}
-<<<<<<< HEAD
 
-	@RequestMapping(path = "/newSong", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
-	public @ResponseBody SongResponse addNewSong(@RequestBody SongRequest songRequest) {
-
-		SongResponse response = new SongResponse();
-		if (songRepository.findByNameSong(songRequest.getNameSong()) == null) {
-
-			Genere owner = genereRepository.findByGenereName(songRequest.getGenereN());
-			Song newSong = new Song(songRequest.getNameSong(), songRequest.getDurationSong(), owner);
-			newSong.setGenere(owner);
-			songRepository.save(newSong);
-			response.setMessage("SONG ADDED");
-			response.setSuccess(true);
-
-			return response;
-
-		} else {
-			response.setMessage("SONG EXIST");
-			response.setSuccess(false);
-			return response;
-		}
-=======
-	
-	
 	@RequestMapping(path = "/newSong", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
 	public @ResponseBody SongResponse addNewSong(@RequestBody SongRequest songRequest) {
 
@@ -356,7 +326,6 @@ public class MainController extends WebMvcConfigurerAdapter {
 				response.setSuccess(false);
 				return response;
 			}
->>>>>>> d0360986bf72bfb389ebfe216c760a7f2733ec16
 	}
 
 	@RequestMapping(path = "/songs", method = RequestMethod.GET, produces = "Application/json")
