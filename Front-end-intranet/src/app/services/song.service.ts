@@ -10,6 +10,7 @@ export class SongService {
   private songsUrl: string = 'http://localhost:8080/app/songs';
   private newSongUrl: string = 'http://localhost:8080/app/newSong';
   private uploadUrl: string = 'http://localhost:8080/app/upload';
+  private addSongToPlaylistUrl: string = 'http://localhost:8080/app/addSongToPlaylist';
 
   constructor(private http: Http) { }
 
@@ -20,7 +21,6 @@ export class SongService {
   }
 
   addNewSong(song: Song) {
-    console.log(JSON.stringify(song));
     return this.http.post(this.newSongUrl, JSON.stringify(song), {headers: getHeaders()})
       .map((response: Response) => {
         var res = response.json();
@@ -30,6 +30,12 @@ export class SongService {
           alert("SONG EXIST")
         }
       })
+      .catch(handleError);
+
+  }
+  addSongToPlaylist(songPlaylist: any): Observable<any> {
+    return this.http.post(this.addSongToPlaylistUrl, JSON.stringify(songPlaylist), { headers: getHeaders() })
+      .map((response: Response) => response.json())
       .catch(handleError);
   }
 

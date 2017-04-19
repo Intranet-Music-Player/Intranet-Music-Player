@@ -17,7 +17,15 @@
       </li>
     </ul>
   </div>
-  <div>
+  <div class="col-md-4 col-lg-4 col-sm-4">
     <label>{{selectedPlaylist?.playlistName}}</label>
+    <ul>
+      <li class="list-group-item" *ngFor="let song of selectedPlaylist?.songs">
+        <label >{{song.nameSong}}</label>
+        <div class="pull-right action-buttons" style="width: 5%">
+          <button type="button" class="btn btn-danger" (click)="removeSongPlaylist(selectedPlaylist?.playlistId,song.songId)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        </div>
+      </li>
+    </ul>
   </div>
 </div>

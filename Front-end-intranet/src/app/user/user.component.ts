@@ -15,7 +15,9 @@ export class UserComponent implements OnInit {
   selectedPlaylist: Playlist;
   hideme: any = {};
 
-  constructor(private playlistService: PlaylistService, private userService: UserService) { }
+  constructor(private playlistService: PlaylistService, private userService: UserService) {
+
+  }
   ngOnInit() {
     this.getCurrentUSer();
   }
@@ -37,7 +39,7 @@ export class UserComponent implements OnInit {
           }
         }
       );
-      this.getCurrentUSer();
+      location.reload();
     } else {
       alert("NAME OF THE PLAYLIST SHOULD HAVE A NAME")
     }
@@ -51,6 +53,7 @@ export class UserComponent implements OnInit {
       getUser => {
         this.currentUser = getUser.user;
         this.playlists = this.currentUser.playlists;
+        sessionStorage.setItem("currentUser", JSON.stringify(this.currentUser));
       }
     )
   }
@@ -75,5 +78,8 @@ export class UserComponent implements OnInit {
     } catch (e) {
       alert("SELECT PLAYLIST TO DELETE");
     }
+  }
+  removeSongPlaylist(playlistId: any ,songId : any){
+    console.log("PLAYLIST ID : " + playlistId + " SONG ID : " + songId );
   }
 }

@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { Routing } from 'app/app.routing'
 import { Ng2FilterPipeModule } from 'ng2-filter-pipe';
+import { ModalModule } from 'angular2-modal';
+import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -39,7 +41,9 @@ import { SearchComponent } from './search/search.component';
     FormsModule,
     HttpModule,
     Routing,
-    Ng2FilterPipeModule
+    Ng2FilterPipeModule, 
+    ModalModule.forRoot(),
+    BootstrapModalModule
   ],
   providers: [UserService, PlaylistService, GenresService, SongService, AuthGuard],
   bootstrap: [AppComponent]

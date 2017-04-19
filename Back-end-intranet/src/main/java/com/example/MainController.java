@@ -103,7 +103,7 @@ public class MainController extends SpringBootServletInitializer  {
 		Playlist remove = playlistRepository.findOne(removeRequest.getPlaylistId());
 
 		us.getPlaylists().remove(remove);
-		
+
 		userRepository.save(us);
 
 		Response r = new Response();
@@ -129,6 +129,22 @@ public class MainController extends SpringBootServletInitializer  {
 			return r;
 		}
 
+	}
+
+	@RequestMapping(path = "/addSongToPlaylist", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
+	public @ResponseBody Response addSongToPlaylist(@RequestBody PlaylistRequest songToPlaylist) {
+		Response r = new Response();
+		
+		Playlist p = playlistRepository.findOne(songToPlaylist.getPlaylistId());
+		Song s = songRepository.findOne(songToPlaylist.getSongId());
+		if (p.getSongs().contains(s)){
+			r.setMessage("SONG ALREADY EXIST IN THIS PLAYLIST");
+		} else {
+			p.addSong(s);
+			playlistRepository.save(p);
+			r.setMessage("SONG ADDED TO PLAYLIST");
+		}
+		return r;
 	}
 
 	@RequestMapping(path = "/users", method = RequestMethod.GET, produces = "Application/json")
@@ -270,7 +286,6 @@ public class MainController extends SpringBootServletInitializer  {
 	public @ResponseBody Iterable<Album> listAllAlbum() {
 		return albumRepository.findAll();
 	}
-
 	/**********************************************************************************/
 	
 	@RequestMapping(path="/upload", method = RequestMethod.POST, consumes = "multipart/form-data")
@@ -278,7 +293,6 @@ public class MainController extends SpringBootServletInitializer  {
 		System.out.println("dades fitxer");
 		System.out.println(uploadFile.getName());
 		System.out.println(uploadFile.getSize());
-		System.out.println("HOHOHOHOHOHOH");
 	}
 	
 	@RequestMapping(path = "/newSong", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")

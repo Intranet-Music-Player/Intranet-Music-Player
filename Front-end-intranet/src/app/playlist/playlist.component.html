@@ -2,7 +2,8 @@
   <h3>PLAYLIST PAGE</h3>
   <div class="col-md-3 col-lg-3">
     <ul>
-      <li class="list-group-item" *ngFor="let playlist of playlists" (click)="onSelectPlaylist(playlist); hideme[playlist.playlistId] = ! hideme[playlist.playlistId]">
+      <li class="list-group-item" *ngFor="let playlist of playlists" (click)="onSelectPlaylist(playlist);">
+        <!-- hideme[playlist.playlistId] = ! hideme[playlist.playlistId]-->
         <label> {{playlist.playlistName}} </label>
         <div class="pull-right action-buttons">
           <button type="button" class="btn btn-danger btn-circle" (click)="following()">FOLLOW</button>
@@ -12,7 +13,10 @@
   </div>
   <div class="col-md-9 col-lg-9">
     <div class="panel-heading" style="background-color: steelblue ; height: 45px; color: white">
-      <h4> {{selectedPlaylist?.playlistName | uppercase}} </h4>
+      <h4> {{selectedPlaylist?.playlistName | uppercase}} {{selectedPlaylist?.playlistId}}</h4>
+      <ul>
+        <li style="color: black;" class="list-group-item" *ngFor="let song of selectedPlaylist?.songs">{{song.nameSong}}</li>
+      </ul>
     </div>
   </div>
 </div>
