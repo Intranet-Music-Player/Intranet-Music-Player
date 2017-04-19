@@ -44,6 +44,8 @@
             <div class="cols-sm-10">
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                <input type="text" class="form-control" name="nameSong" id="nameSong" placeholder="Select File .mp3"
+                       ngModel required/>
                 <input type="text" class="form-control" name="nameSong" id="nameSong" placeholder="Select File .mp3" ngModel required/>
               </div>
             </div>
@@ -55,7 +57,12 @@
             <div class="cols-sm-10">
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+<<<<<<< HEAD
                 <input type="text" class="form-control" name="durationSong" id="durationSong" placeholder="Duration" ngModel required/>
+=======
+                <input type="text" class="form-control" name="durationSong" id="durationSong" placeholder="Duration"
+                       ngModel required/>
+>>>>>>> d0360986bf72bfb389ebfe216c760a7f2733ec16
               </div>
             </div>
           </div>
@@ -82,11 +89,17 @@
           </div>
         </div>
         <div class="form-group ">
+<<<<<<< HEAD
           <input type="file" name="file" (change)="onChange($event)" /><br>
           <button class="btn btn-primary btn-lg btn-block login-button" (click)="addNew(newSong.value)">Add</button>
           <div class="col-md-3">
             <input type="file" (change)="fileChange($event)" placeholder="fileUpload" accept=".mp3">
             <button class="btn btn-primary btn-lg btn-block login-button" (click)="addNew(newSong.value)">Add</button>
+=======
+          <div class="col-md-3">
+              <input type="file" (change)="fileChange($event)" placeholder="fileUpload" accept=".mp3">
+              <button class="btn btn-primary btn-lg btn-block login-button" (click)="addNew(newSong.value)">Add</button>
+>>>>>>> d0360986bf72bfb389ebfe216c760a7f2733ec16
           </div>
         </div>
       </form>

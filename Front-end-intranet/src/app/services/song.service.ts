@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { Song } from './../entities/entities';
@@ -10,7 +10,11 @@ export class SongService {
   private songsUrl: string = 'http://localhost:8080/app/songs';
   private newSongUrl: string = 'http://localhost:8080/app/newSong';
   private uploadUrl: string = 'http://localhost:8080/app/upload';
+<<<<<<< HEAD
   private addSongToPlaylistUrl: string = 'http://localhost:8080/app/addSongToPlaylist';
+=======
+
+>>>>>>> d0360986bf72bfb389ebfe216c760a7f2733ec16
   constructor(private http: Http) { }
 
   getSongs(): Observable<Song[]> {
@@ -20,7 +24,12 @@ export class SongService {
   }
 
   addNewSong(song: Song) {
+<<<<<<< HEAD
     return this.http.post(this.newSongUrl, JSON.stringify(song), { headers: getHeaders() })
+=======
+    console.log(JSON.stringify(song));
+    return this.http.post(this.newSongUrl, JSON.stringify(song), {headers: getHeaders()})
+>>>>>>> d0360986bf72bfb389ebfe216c760a7f2733ec16
       .map((response: Response) => {
         var res = response.json();
         if (res.message === "SONG ADDED") {
@@ -58,6 +67,29 @@ export class SongService {
         data => console.log('success'),
     
         error => console.log(error)
+        )
+    }
+  }
+
+  fileChange(event) {
+    let fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      let file: File = fileList[0];
+      let formData: FormData = new FormData();
+      formData.append('uploadFile', file, file.name);
+
+      let headers = new Headers();
+      headers.append('Content-Type', 'multipart/form-data, boundary=HereGoes');
+      headers.append('Accept', 'application/json');
+
+      let options = new RequestOptions({headers: headers});
+
+      this.http.post(`${this.uploadUrl}`, formData, options)
+        .map(res => res.json())
+        .catch(error => Observable.throw(error))
+        .subscribe(
+          data => console.log('success'),
+          error => console.log(error)
         )
     }
   }
