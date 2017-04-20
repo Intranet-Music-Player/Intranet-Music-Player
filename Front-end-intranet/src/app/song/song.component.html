@@ -3,7 +3,6 @@
 <div style="padding-top: 75px; padding-right: 30px; padding-bottom: 50px; padding-left: 50px;">
   <ul style="list-style: none">
     <li *ngFor="let song of songs">
-<<<<<<< HEAD
       <span><img src="http://cache2.macintoshhowto.com/wp-content/uploads/2010/11/itunes.png"
                  style="height: 25px; width: 25px"/></span> Song Name: <i><b>{{song.nameSong}}</b></i> Genere: <i><b>{{song.genere.genereName}}</b></i><br>
       <audio controls>
@@ -14,11 +13,11 @@
         <div class="dropdown-content">
           <a (click)="showValoration()">Valorate</a>
           <a data-toggle="modal" data-target="#myModal" (click)="songId(song.songId)">Add to playlist</a>
-=======
       <span><button type="button" class="btn btn-primary glyphicon-plus" data-toggle="modal" data-target="#myModal" (click)="songId(song.songId)">  Name: <i><b>{{song.nameSong}}</b></i> Genere: <i><b>{{song.genere.genereName}}</b></i></button></span><br>
       <audio controls style="padding-top: 40px;">
         <source src="app/Tracks/{{song.nameSong}}.mp3" type="audio/mpeg">
       </audio>
+        </div>
       <!-- Modal -->
       <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
@@ -34,13 +33,13 @@
                   <label> {{playlist.playlistName}} </label>
                 </li>
               </ul>
+            </div>
 
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
->>>>>>> rares
         </div>
       </div>
     </li>
@@ -100,40 +99,9 @@
       </form>
     </div>
   </div>
-<<<<<<< HEAD
-
-  <!-- Modal list playlists -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">MY PLAYLISTS</h4>
-        </div>
-        <div class="modal-body">
-          <ul>
-            <li class="list-group-item" *ngFor="let playlist of playlists" data-toggle="modal" data-target="#myModal" (click)="addSongPlaylist(playlist.playlistId)">
-              <label> {{playlist.playlistName}} </label>
-            </li>
-          </ul>
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-<<<<<<< HEAD
-=======
-</div>
->>>>>>> utman
-=======
 </div>
 <form method="POST" action="http://localhost:8080/app/newSong">
   <input type="file" name="file" /><br/>
   <button type="submit">SEND</button>
 </form>
 </html>
->>>>>>> rares

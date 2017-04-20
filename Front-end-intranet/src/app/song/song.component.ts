@@ -4,12 +4,10 @@ import { SongService } from './../services/song.service';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { PlaylistComponent } from 'app/playlist/playlist.component';
-import { RatingModule } from "ngx-rating";
 
 @Component({
   selector: 'app-song',
   templateUrl: './song.component.html',
-  @View
   styleUrls: ['./song.component.css']
 })
 export class SongComponent implements OnInit {
