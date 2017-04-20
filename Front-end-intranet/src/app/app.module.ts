@@ -24,6 +24,9 @@ import { AuthGuard } from 'app/services/authguard';
 import { UserComponent } from './user/user.component';
 import { SearchComponent } from './search/search.component';
 
+import { StarRatingModule } from 'angular-star-rating';
+import { MyEventsComponent } from './my-events/my-events.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +38,8 @@ import { SearchComponent } from './search/search.component';
     GenresComponent,
     SongComponent,
     UserComponent,
-    SearchComponent
+    SearchComponent,
+    MyEventsComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +48,8 @@ import { SearchComponent } from './search/search.component';
     Routing,
     Ng2FilterPipeModule, 
     ModalModule.forRoot(),
-    BootstrapModalModule
+    BootstrapModalModule,
+    StarRatingModule
   ],
   providers: [UserService, PlaylistService, GenresService, SongService, AuthGuard],
   bootstrap: [AppComponent]

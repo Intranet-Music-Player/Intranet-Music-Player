@@ -19,7 +19,7 @@ const APP_ROUTES: Routes = [
         path: 'home', component: HomeComponent,
         children: [
             { path: 'playlists', component: PlaylistComponent },
-            { path: 'rares', component: SongComponent },
+            { path: 'songs', component: SongComponent },
             { path: 'upload', component: SongComponent },
             { path: 'genres', component: GenresComponent },
             { path: 'user', component: UserComponent },

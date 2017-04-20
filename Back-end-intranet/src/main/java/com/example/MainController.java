@@ -203,12 +203,11 @@ public class MainController extends SpringBootServletInitializer  {
 		return playlistRepository.findAll();
 	}
 
-<<<<<<< HEAD
 	/**********************************************************************************/
 	
-=======
+
 	// GENERE ADD ---> WORKING FINE
->>>>>>> utman
+
 	@GetMapping(path = "/genere/add")
 	public @ResponseBody String addNewGenere(@RequestParam String genereName) {
 

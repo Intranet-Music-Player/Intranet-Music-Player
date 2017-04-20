@@ -88,12 +88,8 @@ export class SongComponent implements OnInit {
       }
     );
   }
-  showValoration() {
-    this.modal.alert()
-      .size('sm')
-      .showClose(true)
-      .title('VALORATION')
-      .body(`IMAGINE 5 STARS`)
-      .open();
+  getValoration(star : number){
+    console.log(star);
   }
+
 }
