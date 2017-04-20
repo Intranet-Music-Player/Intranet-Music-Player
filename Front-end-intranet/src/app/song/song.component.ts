@@ -1,4 +1,4 @@
-import { Component, OnInit, NgModule, ViewContainerRef } from '@angular/core';
+import {Component, OnInit, NgModule, ViewContainerRef, ViewChild} from '@angular/core';
 import { Playlist, Song } from './../entities/entities';
 import { SongService } from './../services/song.service';
 import { Overlay } from 'angular2-modal';
@@ -9,6 +9,7 @@ import { RatingModule } from "ngx-rating";
 @Component({
   selector: 'app-song',
   templateUrl: './song.component.html',
+  @View
   styleUrls: ['./song.component.css']
 })
 export class SongComponent implements OnInit {
@@ -47,8 +48,17 @@ export class SongComponent implements OnInit {
     console.log(this.songs);
   }
 
-  fileChange(event: any) {
+  /*fileChange(event: any) {
     this.songService.fileChange(event);
+  }*/
+
+  fileChange(event) {
+    console.log('onChange');
+    var files = event.srcElement.files;
+    console.log(files);
+    this.songService.makeFileRequest('http://localhost:8080/app/upload', [], files).subscribe(() => {
+      console.log('sent');
+    });
   }
 
   addNew(newSong: any) {
