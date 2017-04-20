@@ -16,4 +16,5 @@ public class IntranetMusicPlayerApplication extends WebMvcConfigurerAdapter {
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**");
 	}
+
 }

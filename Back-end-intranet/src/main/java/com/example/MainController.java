@@ -1,12 +1,12 @@
 package com.example;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.example.entities.*;
 import com.example.repository.*;
@@ -286,13 +285,12 @@ public class MainController extends SpringBootServletInitializer  {
 	public @ResponseBody Iterable<Album> listAllAlbum() {
 		return albumRepository.findAll();
 	}
-	/**********************************************************************************/
 	
 	@RequestMapping(path="/upload", method = RequestMethod.POST, consumes = "multipart/form-data")
-	public void uploadFiles(@RequestBody MultipartFile uploadFile){
+	public void uploadFiles(@RequestBody MultipartFile uploadFile)	{
 		System.out.println("dades fitxer");
-		System.out.println(uploadFile.getName());
-		System.out.println(uploadFile.getSize());
+		//System.out.println(uploadFile.getName());
+		//System.out.println(uploadFile.getSize());
 	}
 	
 	@RequestMapping(path = "/newSong", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
