@@ -79,7 +79,15 @@ export class UserComponent implements OnInit {
       alert("SELECT PLAYLIST TO DELETE");
     }
   }
-  removeSongPlaylist(playlistId: any ,songId : any){
-    console.log("PLAYLIST ID : " + playlistId + " SONG ID : " + songId );
+  removeSongPlaylist(playlistId: any, songId: any) {
+    console.log("PLAYLIST ID : " + playlistId + " SONG ID : " + songId);
+    var removeRequest: any = {
+      playlistId: playlistId,
+      songId: songId
+    }
+    this.playlistService.removeSongPlaylist(removeRequest).subscribe(
+      getResponse => console.log(getResponse)
+    );
+    location.reload();
   }
 }

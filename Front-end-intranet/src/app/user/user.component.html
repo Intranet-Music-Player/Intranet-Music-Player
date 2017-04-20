@@ -21,8 +21,11 @@
     <label>{{selectedPlaylist?.playlistName}}</label>
     <ul>
       <li class="list-group-item" *ngFor="let song of selectedPlaylist?.songs">
-        <label >{{song.nameSong}}</label>
-        <div class="pull-right action-buttons" style="width: 5%">
+        <label>{{song.nameSong }}</label>
+        <audio controls>
+          <source src="app/tracks/{{song.nameSong}}.mp3" type="audio/mpeg">
+        </audio>
+        <div class="pull-right action-buttons">
           <button type="button" class="btn btn-danger" (click)="removeSongPlaylist(selectedPlaylist?.playlistId,song.songId)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
         </div>
       </li>
