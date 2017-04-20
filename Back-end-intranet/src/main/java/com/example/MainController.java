@@ -157,7 +157,6 @@ public class MainController extends WebMvcConfigurerAdapter {
 	@RequestMapping(path = "/removeSongPlaylist", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
 	private @ResponseBody Response removeSongPlaylist(@RequestBody PlaylistRequest removeSong) {
 		Response r = new Response();
-		System.out.println("PLAYLIST ID : " + removeSong.getPlaylistId() + " SONG ID : " + removeSong.getSongId());
 		Playlist p = playlistRepository.findOne(removeSong.getPlaylistId());
 		Song s = songRepository.findOne(removeSong.getSongId());
 		p.getSongs().remove(s);
@@ -165,7 +164,7 @@ public class MainController extends WebMvcConfigurerAdapter {
 		r.setMessage("SONG DELETED SUCCESFULLY");
 		return r;
 	}
-
+	
 	@RequestMapping(path = "/users", method = RequestMethod.GET, produces = "Application/json")
 	public @ResponseBody Iterable<User> listAllUsers() {
 		return userRepository.findAll();
@@ -212,7 +211,6 @@ public class MainController extends WebMvcConfigurerAdapter {
 		return playlistRepository.findAll();
 	}
 
-	/**********************************************************************************/
 	// GENERE ADD ---> WORKING FINE
 	@GetMapping(path = "/genere/add")
 	public @ResponseBody String addNewGenere(@RequestParam String genereName) {

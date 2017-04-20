@@ -4,6 +4,7 @@ import { SongService } from './../services/song.service';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { PlaylistComponent } from 'app/playlist/playlist.component';
+import { RatingModule } from "ngx-rating";
 
 @Component({
   selector: 'app-song',
@@ -18,6 +19,8 @@ export class SongComponent implements OnInit {
   songIdVal: any;
   addMessage: any;
 
+  starsCount: number = 5;
+  starsCounts: number[] = [];
   constructor(private songService: SongService, overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal) {
     overlay.defaultViewContainer = vcRef;
   }
@@ -74,15 +77,23 @@ export class SongComponent implements OnInit {
       getRemoveResponse => {
         removeSongResponse = getRemoveResponse;
         this.addMessage = removeSongResponse.message;
-        /*---------------------------------------------------*/ 
+        /*---------------------------------------------------*/
         this.modal.alert()
           .size('lg')
           .showClose(true)
           .title('A simple Alert style modal window')
           .body(this.addMessage)
           .open();
-        /*---------------------------------------------------*/          
+        /*---------------------------------------------------*/
       }
     );
+  }
+  showValoration() {
+    this.modal.alert()
+      .size('sm')
+      .showClose(true)
+      .title('VALORATION')
+      .body(`IMAGINE 5 STARS`)
+      .open();
   }
 }
