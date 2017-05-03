@@ -8,7 +8,7 @@
 			<label>Username</label>
 			<input type="text" placeholder="Enter your username" name="userlogin" ngModel required/>
 			<label>password </label>
-			<input type="password" placeholder="Enter your password" name="password" ngModel required/>
+			<input type="password" pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/"placeholder="Enter your password" name="password" ngModel required/>
 			<button (click)="registerNewUser(register.value)">register</button>
 		</form>
 	</div>

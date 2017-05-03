@@ -1,12 +1,14 @@
 package com.example;
 
-import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,18 +17,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import com.example.entities.*;
 import com.example.repository.*;
 import com.example.requsest.*;
 import com.example.responses.*;
 
-
 @Controller
 @EnableWebMvc
 @RequestMapping(path = "/app")
-public class MainController extends SpringBootServletInitializer  {
+public class MainController extends SpringBootServletInitializer {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -50,7 +50,8 @@ public class MainController extends SpringBootServletInitializer  {
 		UserResponse response = new UserResponse();
 		if (userRepository.findByUserlogin(userRequest.getUserlogin()) == null) {
 			if (userRepository.findByEmail(userRequest.getEmail()) == null) {
-				User u = new User(userRequest.getName(), userRequest.getUserlogin(), userRequest.getPassword(),
+				String encryptedPassword = hashPassword(userRequest.getPassword());
+				User u = new User(userRequest.getName(), userRequest.getUserlogin(), encryptedPassword,
 						userRequest.getEmail());
 				userRepository.save(u);
 				response.setMessage("WELCOME TO OUR APP");
@@ -68,14 +69,36 @@ public class MainController extends SpringBootServletInitializer  {
 		}
 	}
 
+	private String hashPassword(String passwordToHash) {
+		String generatedPassword = null;
+		try {
+			// Create MessageDigest instance for MD5
+			MessageDigest md = MessageDigest.getInstance("SHA-512");
+			// Add password bytes to digest
+			md.update(passwordToHash.getBytes());
+			// Get the hash's bytes
+			byte[] bytes = md.digest();
+			// This bytes[] has bytes in decimal format;
+			// Convert it to hexadecimal format
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < bytes.length; i++) {
+				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			// Get complete hashed password in hex format
+			generatedPassword = sb.toString();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return generatedPassword;
+	}
+
 	@RequestMapping(path = "/login", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
 	public @ResponseBody UserResponse checkUserLogin(@RequestBody UserRequest userRequest) {
-		System.err.println(userRequest.getUserlogin() + "-----" + userRequest.getPassword());
 		User log = userRepository.findByUserlogin(userRequest.getUserlogin());
 		UserResponse response = new UserResponse();
-
+		String encryptedPassword = hashPassword(userRequest.getPassword());
 		if (log != null && log.getUserlogin().equals(userRequest.getUserlogin())
-				&& log.getPassword().equals(userRequest.getPassword())) {
+				&& log.getPassword().equals(encryptedPassword)) {
 			response.setUser(log);
 			response.setMessage("SUCCESFULL");
 			response.setSuccess(true);
@@ -157,7 +180,7 @@ public class MainController extends SpringBootServletInitializer  {
 		r.setMessage("SONG DELETED SUCCESFULLY");
 		return r;
 	}
-	
+
 	@RequestMapping(path = "/users", method = RequestMethod.GET, produces = "Application/json")
 	public @ResponseBody Iterable<User> listAllUsers() {
 		return userRepository.findAll();
@@ -175,7 +198,7 @@ public class MainController extends SpringBootServletInitializer  {
 	}
 
 	/**********************************************************************************/
-	
+
 	@RequestMapping(path = "/playlist/add", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
 	public @ResponseBody Response addNewPlaylist(@RequestBody PlaylistRequest playlistRequest) {
 		Response r = new Response();
@@ -204,7 +227,6 @@ public class MainController extends SpringBootServletInitializer  {
 	}
 
 	/**********************************************************************************/
-	
 
 	// GENERE ADD ---> WORKING FINE
 
@@ -220,7 +242,6 @@ public class MainController extends SpringBootServletInitializer  {
 			return "NEW GENERE SAVED";
 		}
 	}
-
 
 	@RequestMapping(path = "/generes", method = RequestMethod.GET, produces = "Application/json")
 	public @ResponseBody Iterable<Genere> listAllGeneres() {
@@ -278,7 +299,7 @@ public class MainController extends SpringBootServletInitializer  {
 	}
 
 	/**********************************************************************************/
-	
+
 	@GetMapping(path = "/album/add")
 	public @ResponseBody String addNewAlbum(@RequestParam String nameAlbum, @RequestParam String datePub,
 			@RequestParam String bandName) {
@@ -300,44 +321,45 @@ public class MainController extends SpringBootServletInitializer  {
 	public @ResponseBody Iterable<Album> listAllAlbum() {
 		return albumRepository.findAll();
 	}
+
 	/**********************************************************************************/
-	
-	@RequestMapping(path="/upload", method = RequestMethod.POST, consumes = "multipart/form-data")
-	public void uploadFiles(@RequestBody MultipartFile uploadFile){
+
+	@RequestMapping(path = "/upload", method = RequestMethod.POST, consumes = "multipart/form-data")
+	public void uploadFiles(@RequestBody MultipartFile uploadFile) {
 		System.out.println("dades fitxer");
 		System.out.println(uploadFile.getName());
 		System.out.println(uploadFile.getSize());
 	}
-	
+
 	@RequestMapping(path = "/newSong", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
 	public @ResponseBody SongResponse addNewSong(@RequestBody SongRequest songRequest) {
 
-			SongResponse response = new SongResponse();
-			if ( songRepository.findByNameSong(songRequest.getNameSong()) == null) {
-					
-				Genere owner = genereRepository.findByGenereName(songRequest.getGenereN());
-				Song newSong = new Song(songRequest.getNameSong(), songRequest.getDurationSong(), owner);
-				newSong.setGenere(owner);
-				songRepository.save(newSong);
-				response.setMessage("SONG ADDED");
-				response.setSuccess(true);
-				
-				return response;
-				
-			}else {
-				response.setMessage("SONG EXIST");
-				response.setSuccess(false);
-				return response;
-			}
+		SongResponse response = new SongResponse();
+		if (songRepository.findByNameSong(songRequest.getNameSong()) == null) {
+
+			Genere owner = genereRepository.findByGenereName(songRequest.getGenereN());
+			Song newSong = new Song(songRequest.getNameSong(), songRequest.getDurationSong(), owner);
+			newSong.setGenere(owner);
+			songRepository.save(newSong);
+			response.setMessage("SONG ADDED");
+			response.setSuccess(true);
+
+			return response;
+
+		} else {
+			response.setMessage("SONG EXIST");
+			response.setSuccess(false);
+			return response;
+		}
 	}
 
 	@RequestMapping(path = "/songs", method = RequestMethod.GET, produces = "Application/json")
 	public @ResponseBody Iterable<Song> listAllSong() {
 		return songRepository.findAll();
 	}
-	
+
 	/**********************************************************************************/
-	
+
 	@GetMapping(path = "/playlist/valoration")
 	public @ResponseBody String valoratePlaylist(@RequestParam String userlogin, @RequestParam String playlistName,
 			@RequestParam Long points) {
