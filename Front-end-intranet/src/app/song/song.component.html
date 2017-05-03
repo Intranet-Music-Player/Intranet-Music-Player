@@ -19,7 +19,7 @@
 <div class="container">
   <div class="row main">
     <div class="main-login main-center">
-      <form #newSong="ngForm">
+      <form #newSong="ngForm" enctype="multipart/form-data">
         <div class="container">
           <div class="form-group">
             <label for="nameSong" class="cols-sm-2 control-label">Song Name</label>
@@ -63,11 +63,20 @@
             </div>
           </div>
         </div>
-        <div class="form-group ">
-          <input type="file" (change)="fileChange($event)" placeholder="fileUpload" accept=".mp3">
-          <button class="btn btn-primary btn-lg btn-block login-button" (click)="addNew(newSong.value)">Add</button>
-        </div>
+
+          <div class="form-group">
+            <input type="file" id="pdfInput" class="form-control" (change)="fileChange($event)">
+          </div>
+          <div class="form-group">
+            <button type="button" class="btn btn-success" [disabled]="!buttonEnabled" (click)="uploadSong(newSong.value)">Upload File!</button><span>   </span>
+          </div>
+
       </form>
+      <!--<div>
+        <div class="text-center">
+
+        </div>
+      </div>-->
     </div>
   </div>
 
@@ -110,5 +119,6 @@
       </div>
     </div>
   </div>
+
 
 </div>

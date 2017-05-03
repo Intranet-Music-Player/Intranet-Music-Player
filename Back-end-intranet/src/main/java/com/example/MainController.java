@@ -1,5 +1,12 @@
 package com.example;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -7,6 +14,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -154,6 +163,54 @@ public class MainController extends SpringBootServletInitializer {
 
 	}
 
+	@RequestMapping(value = "/file", method = RequestMethod.POST, consumes = "multipart/form-data")
+	@ResponseBody
+	public Response uploadSong(@RequestPart("uploadFile") MultipartFile file) throws IOException {
+		System.out.println("-------------------------------");
+		System.out.println("1--" + file.getName());
+		System.out.println("2--" + file.getContentType());
+		System.out.println("3--" + file.getOriginalFilename());
+		System.out.println("4--" + file.getSize());
+		System.out.println("-------------------------------");
+
+		Response s = new Response();
+		if (createFileRepo(file)) {
+			s.setSuccess(true);
+		} else {
+			s.setSuccess(false);
+		}
+		return s;
+	}
+
+	private boolean createFileRepo(MultipartFile file) {
+		InputStream inputStream = null;
+		OutputStream outputStream = null;
+		String fileName = file.getOriginalFilename();
+
+		File newFile = new File("songs/" + fileName);
+
+		try {
+			inputStream = file.getInputStream();
+
+			if (!newFile.exists()) {
+				newFile.createNewFile();
+			}
+			outputStream = new FileOutputStream(newFile);
+			int read = 0;
+			byte[] bytes = new byte[1024];
+
+			while ((read = inputStream.read(bytes)) != -1) {
+				outputStream.write(bytes, 0, read);
+			}
+			outputStream.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	/**/
 	@RequestMapping(path = "/addSongToPlaylist", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
 	public @ResponseBody Response addSongToPlaylist(@RequestBody PlaylistRequest songToPlaylist) {
 		Response r = new Response();
