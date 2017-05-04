@@ -99,22 +99,31 @@ export class SongComponent implements OnInit {
   fileList: any;
   fileChange(e) {
     this.fileList = e.target.files;
-    this.buttonEnabled= true;
+    this.buttonEnabled = true;
   }
 
-  uploadSong(newSongData : any) {
+  uploadSong(newSongData: any) {
     console.log(newSongData.nameSong);
     console.log(newSongData.durationSong);
     console.log(newSongData.genereN);
-    
+
     if (this.fileList.length > 0) {
       let file: File = this.fileList[0];
       let formData: FormData = new FormData();
 
+      var uploadRequest: any = {
+        nameSong: newSongData.nameSong,
+        durationSong: newSongData.durationSong,
+        genereName: newSongData.genereN
+      }
+
       formData.append('uploadFile', file, file.name);
-
+      //formData.append('fileInfo', uploadRequest);
       //console.log(file.size);
-
+      formData.append('fileInfo', new Blob([JSON.stringify(uploadRequest)],
+        {
+          type: "application/json"
+        }));
       let headers = new Headers();
       headers.append('Accept', 'application/json');
       let options = new RequestOptions({ headers: headers });

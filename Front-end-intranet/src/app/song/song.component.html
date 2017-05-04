@@ -1,55 +1,50 @@
-<div style="padding-top: 75px; padding-right: 30px; padding-bottom: 50px; padding-left: 50px;">
-  <ul style="list-style: none">
-    <li *ngFor="let song of songs">
-      <span><img src="http://cache2.macintoshhowto.com/wp-content/uploads/2010/11/itunes.png"
-                 style="height: 25px; width: 25px"/></span> Song Name: <i><b>{{song.nameSong}}</b></i> Genere: <i><b>{{song.genere.genereName}}</b></i><br>
-      <audio controls>
-        <source src="app/Tracks/{{song.nameSong}}.mp3" type="audio/mpeg">
-      </audio>
-      <div class="dropdown">
-        <button class="dropbtn"><span class="glyphicon glyphicon-option-vertical"></span></button>
-        <div class="dropdown-content">
-          <a data-toggle="modal" data-target="#Valorate">Valorate</a>
-          <a data-toggle="modal" data-target="#myModal" (click)="songId(song.songId)">Add to playlist</a>
-        </div>
-      </div>
-    </li>
-  </ul>
-</div>
-<div class="container">
-  <div class="row main">
-    <div class="main-login main-center">
-      <form #newSong="ngForm" enctype="multipart/form-data">
-        <div class="container">
-          <div class="form-group">
-            <label for="nameSong" class="cols-sm-2 control-label">Song Name</label>
-            <div class="cols-sm-10">
-              <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                <input type="text" class="form-control" name="nameSong" id="nameSong" placeholder="Select File .mp3" ngModel required/>
-              </div>
-            </div>
+<div class="row" style="padding-top: 75px; padding-right: 30px; padding-bottom: 50px; padding-left: 50px;">
+  <div class="col-md-4 col-sm-4">
+    <ul style="list-style: none">
+      <li *ngFor="let song of songs">
+        <span><img src="http://cache2.macintoshhowto.com/wp-content/uploads/2010/11/itunes.png"
+                 style="height: 25px; width: 25px"/></span> Song Name: <i><b>{{song.nameSong}}</b></i> Genere:
+        <i><b>{{song.genere.genereName}}</b></i><br>
+        <audio controls>
+          <source src="app/Tracks/{{song.nameSong}}.mp3" type="audio/mpeg">
+        </audio>
+        <div class="dropdown">
+          <button class="dropbtn"><span class="glyphicon glyphicon-option-vertical"></span></button>
+          <div class="dropdown-content">
+            <a data-toggle="modal" data-target="#Valorate">Valorate</a>
+            <a data-toggle="modal" data-target="#myModal" (click)="songId(song.songId)">Add to playlist</a>
           </div>
         </div>
-        <div class="container">
-          <div class="form-group">
-            <label for="durationSong" class="cols-sm-2 control-label">Duration</label>
-            <div class="cols-sm-10">
-              <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                <input type="text" class="form-control" name="durationSong" id="durationSong" placeholder="Duration" ngModel required/>
-              </div>
-            </div>
-          </div>
+      </li>
+      <li><button class="btn btn-default btn-danger" data-toggle="modal" data-target="#uploadSong">NEW SONG</button></li>
+    </ul>
+
+  </div>
+
+  <!-- MODAL UPLOAD SONG -->
+  <div class="modal fade" id="uploadSong" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">UPLOAD SONG</h4>
         </div>
-        <div class="container">
-          <div class="form-group">
-            <label for="genereN" class="cols-sm-2 control-label">Genere
+        <div class="modal-body">
+          <div class="main-login main-center">
+            <form #newSong="ngForm" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="durationSong" class="cols-sm-2 control-label">Duration</label>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                  <input type="number" class="form-control" name="durationSong" id="durationSong" placeholder="Duration" ngModel required/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="genereN" class="cols-sm-2 control-label">Genere
             </label>
-            <div class="cols-sm-10">
-              <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                <select class="form-control" name="genereN" id="genereN" ngModel required>
+                <div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                  <select class="form-control" name="genereN" id="genereN" ngModel required>
                   <option value="ELECTRONIC">ELECTRONIC</option>
                   <option value="HIP HOP">HIP HOP</option>
                   <option value="JAZZ">JAZZ</option>
@@ -59,28 +54,26 @@
                   <option value="REGGAE">REGGAE</option>
                   <option value="ROCK">ROCK</option>
                 </select>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
 
-          <div class="form-group">
-            <input type="file" id="pdfInput" class="form-control" (change)="fileChange($event)">
+              <div class="form-group">
+                <input type="file" (change)="fileChange($event)">
+              </div>
+              <div class="form-group">
+                <button type="button" class="btn btn-success" [disabled]="!buttonEnabled" data-toggle="modal" data-target="#uploadSong" (click)="uploadSong(newSong.value)">Upload File!</button><span>   </span>
+              </div>
+            </form>
           </div>
-          <div class="form-group">
-            <button type="button" class="btn btn-success" [disabled]="!buttonEnabled" (click)="uploadSong(newSong.value)">Upload File!</button><span>   </span>
-          </div>
-
-      </form>
-      <!--<div>
-        <div class="text-center">
 
         </div>
-      </div>-->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">CLOSE</button>
+        </div>
+      </div>
     </div>
   </div>
-
-  <!-- Modal list playlists -->
+  <!-- MODAL LIST PLAYLIST -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
@@ -103,6 +96,7 @@
       </div>
     </div>
   </div>
+  <!-- MODAL VALORATION SONG-->
   <div class="modal fade" id="Valorate" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
@@ -119,6 +113,4 @@
       </div>
     </div>
   </div>
-
-
 </div>
