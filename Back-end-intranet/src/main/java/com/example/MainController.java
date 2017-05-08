@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -380,15 +379,6 @@ public class MainController extends SpringBootServletInitializer {
 	@GetMapping(path = "albums")
 	public @ResponseBody Iterable<Album> listAllAlbum() {
 		return albumRepository.findAll();
-	}
-
-	/**********************************************************************************/
-
-	@RequestMapping(path = "/upload", method = RequestMethod.POST, consumes = "multipart/form-data")
-	public void uploadFiles(@RequestBody MultipartFile uploadFile) {
-		System.out.println("dades fitxer");
-		System.out.println(uploadFile.getName());
-		System.out.println(uploadFile.getSize());
 	}
 
 	@RequestMapping(path = "/newSong", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")

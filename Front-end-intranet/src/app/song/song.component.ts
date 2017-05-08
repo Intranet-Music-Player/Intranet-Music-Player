@@ -1,4 +1,4 @@
-import { Component, OnInit, NgModule, ViewContainerRef } from '@angular/core';
+import {Component, OnInit, NgModule, ViewContainerRef, ViewChild} from '@angular/core';
 import { Playlist, Song } from './../entities/entities';
 import { SongService } from './../services/song.service';
 import { Overlay } from 'angular2-modal';
@@ -53,7 +53,6 @@ export class SongComponent implements OnInit {
   /*fileChange(event: any) {
     this.songService.fileChange(event);
   }*/
-
   addNew(newSong: any) {
     var songRequest: Song = {
       songId: newSong.songId,
