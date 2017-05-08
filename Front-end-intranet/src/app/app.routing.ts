@@ -10,6 +10,8 @@ import { SongComponent } from './song/song.component';
 import { GenresComponent } from './genres/genres.component';
 import { UserComponent } from './user/user.component';
 import { SearchComponent } from './search/search.component';
+import { ArtistComponent } from './artist/artist.component';
+import { AlbumsComponent } from './albums/albums.component';
 
 const APP_ROUTES: Routes = [
     { path: '', component: LoginComponent },
@@ -24,6 +26,9 @@ const APP_ROUTES: Routes = [
             { path: 'genres', component: GenresComponent },
             { path: 'user', component: UserComponent },
             { path: 'search', component: SearchComponent },
+            { path: 'artist', component: ArtistComponent },
+            { path: 'albums', component: AlbumsComponent },
+
         ],
         canActivate: [AuthGuard]
     },

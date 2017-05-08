@@ -26,6 +26,8 @@ import { SearchComponent } from './search/search.component';
 
 import { StarRatingModule } from 'angular-star-rating';
 import { MyEventsComponent } from './my-events/my-events.component';
+import { ArtistComponent } from './artist/artist.component';
+import { AlbumsComponent } from './albums/albums.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { MyEventsComponent } from './my-events/my-events.component';
     SongComponent,
     UserComponent,
     SearchComponent,
-    MyEventsComponent
+    MyEventsComponent,
+    ArtistComponent,
+    AlbumsComponent
   ],
   imports: [
     BrowserModule,

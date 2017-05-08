@@ -5,20 +5,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import com.dropbox.core.DbxClient;
-import com.dropbox.core.DbxException;
 import com.example.entities.*;
 import com.example.repository.*;
 import com.example.requsest.*;
@@ -172,7 +162,7 @@ public class MainController extends SpringBootServletInitializer {
 	@RequestMapping(value = "/file", method = RequestMethod.POST, consumes = "multipart/form-data")
 	@ResponseBody
 	public Response uploadSong(@RequestPart("uploadFile") MultipartFile file,
-			@RequestPart("fileInfo") SongRequest songInfo) throws IOException, DbxException {
+			@RequestPart("fileInfo") SongRequest songInfo) throws IOException{
 		System.out.println("-------------------------------");
 		System.out.println("1--" + file.getName());
 		System.out.println("2--" + file.getContentType());
@@ -181,15 +171,15 @@ public class MainController extends SpringBootServletInitializer {
 		System.out.println("-------------------------------");
 		System.out.println("FILE INFO----------------------");
 		System.out.println("1--" + songInfo.getGenereN());
-		System.out.println("2--"+songInfo.getDurationSong());
-		
+		System.out.println("2--" + songInfo.getDurationSong());
+
 		Response s = new Response();
 		if (createFileRepo(file)) {
 			Song newS = new Song();
 			Genere g = genereRepository.findByGenereName(songInfo.getGenereN());
 			newS.setDurationSong(songInfo.getDurationSong());
 			newS.setGenere(g);
-			newS.setNameSong(file.getOriginalFilename().substring(0,file.getOriginalFilename().lastIndexOf('.')));
+			newS.setNameSong(file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf('.')));
 			songRepository.save(newS);
 			s.setSuccess(true);
 		} else {
@@ -198,12 +188,12 @@ public class MainController extends SpringBootServletInitializer {
 		return s;
 	}
 
-	private boolean createFileRepo(MultipartFile file) throws IOException, DbxException {
+	private boolean createFileRepo(MultipartFile file) throws IOException {
 		InputStream inputStream = null;
 		OutputStream outputStream = null;
 		String fileName = file.getOriginalFilename();
 		File newFile = new File("songs/" + fileName);
-		
+
 		try {
 			inputStream = file.getInputStream();
 			if (!newFile.exists()) {
@@ -223,13 +213,6 @@ public class MainController extends SpringBootServletInitializer {
 			return false;
 		}
 	}
-//	private void uploadFile() throws IOException, DbxException{
-//		DbxClient dbxClient;
-//		DropboxAPI drop = new DropboxAPI();
-//		
-//		dbxClient = drop.authDropbox();
-//		
-//	}
 
 	@RequestMapping(path = "/addSongToPlaylist", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
 	public @ResponseBody Response addSongToPlaylist(@RequestBody PlaylistRequest songToPlaylist) {
