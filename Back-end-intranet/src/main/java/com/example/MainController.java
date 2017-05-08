@@ -191,8 +191,8 @@ public class MainController extends SpringBootServletInitializer {
 		InputStream inputStream = null;
 		OutputStream outputStream = null;
 		String fileName = file.getOriginalFilename();
-		File newFile = new File("songs/" + fileName);
-
+		//File newFile = new File("songs/" + fileName);
+		File newFile = new File("../Front-end-intranet/src/app/tracks/" + fileName);
 		try {
 			inputStream = file.getInputStream();
 			if (!newFile.exists()) {

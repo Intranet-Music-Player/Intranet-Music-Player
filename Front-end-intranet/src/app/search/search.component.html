@@ -4,38 +4,42 @@
       <h4>SEARCH PLAYLIST NAME</h4>
       <div class="row-content">
         <div class="input-group stylish-input-group">
-          <input type="text" class="form-control" [(ngModel)]="valor.playlistName" placeholder="Search">
+          <input type="text" class="form-control" [(ngModel)]="playlist.playlistName" [(ngModel)]="song.nameSong" placeholder="Search">
           <span class="input-group-addon"><button type="submit"><span class="glyphicon glyphicon-search"></span>
           </button>
           </span>
         </div>
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
-            Filter by ..
-            </button>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" (click)="filterBy('playlists')">Playlists</a><br>
-            <a class="dropdown-item" (click)="filterBy('songs')">Songs</a><br>
-            <a class="dropdown-item" (click)="filterBy('albums')">Albums</a><br>
-            <a class="dropdown-item" (click)="filterBy('artist')">Artists</a><br>
-          </div>
-        </div>
-
       </div>
 
       <ul class="list-group">
-        <li *ngFor="let playlist of playlists| filterBy: valor" class="list-group-item"> {{ playlist.playlistName }} </li>
-        <li *ngFor="let song of songs | filterBy: valor" class="list-group-item"> {{ song.nameSong }} <span class="glyphicon glyphicon-music"></span> </li>
+        <li *ngFor="let playlist of playlists| filterBy: playlist" (click)="onSelectPlaylist(playlist);" class="list-group-item"><span class="glyphicon glyphicon-list"></span> {{ playlist.playlistName }} </li>
+        <li *ngFor="let song of songs | filterBy: song" (click)="onSelectSong(song);" class="list-group-item"> <span class="glyphicon glyphicon-music"></span> {{ song.nameSong }} </li>
       </ul>
     </div>
     <div class="col-md-9 col-lg-9 col-sm-9">
-      <h4>MASTER-DETAIL </h4>
+      <h4>DETAIL LIST ITEM</h4>
+      <div>
+
+        <h6> {{selectedPlaylist?.playlistName | uppercase}}</h6>
+        <ul>
+          <li style="color: black;" class="list-group-item" *ngFor="let song of selectedPlaylist?.songs">{{song.nameSong}}</li>
+        </ul>
+      </div>
+      <div>
+        <h6> {{selectedSong?.nameSong | uppercase}} </h6>
+        <audio controls>
+          <source src="Back-end-intranet/songs/{{selectedSong?.nameSong}}.mp3" type="audio/mpeg">
+        </audio>
+      </div>
+
+
+      <!--<h4>MASTER-DETAIL </h4>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos possimus beatae iste numquam aliquid ex sint
         temporibus enim, doloremque at vitae aspernatur nostrum perferendis ipsam praesentium sequi qui magni incidunt!</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus asperiores, corporis saepe fuga expedita blanditiis
         non. Ipsum quia ad repellendus molestiae? Unde inventore eos reprehenderit quam deleniti repudiandae dolor, ea.</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta quos sint id sequi ab natus amet dolore facere, tempore
-        inventore ducimus ut quidem, nisi non sed et perspiciatis placeat minus.</p>
+        inventore ducimus ut quidem, nisi non sed et perspiciatis placeat minus.</p>-->
     </div>
   </div>
 </div>
