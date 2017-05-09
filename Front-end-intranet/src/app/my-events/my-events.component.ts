@@ -15,13 +15,16 @@ export class MyEventsComponent {
   onRatingChangeResult: IStarRatingOnRatingChangeEven;
 
   onClick = ($event: IStarRatingOnClickEvent) => {
-    console.log('onClick $event: ', $event);
+    //console.log('onClick $event: ', $event);
     this.onClickResult = $event;
   };
 
   onRatingChange = ($event: IStarRatingOnRatingChangeEven) => {
-    console.log('onRatingUpdated $event: ', $event);
+    //console.log('onRatingUpdated $event: ', $event);
     this.onRatingChangeResult = $event;
   };
+  sendValoration(){
+    console.log(this.onRatingChangeResult.rating);
+  }
 
 }

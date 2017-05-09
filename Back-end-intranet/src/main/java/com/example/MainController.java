@@ -154,7 +154,6 @@ public class MainController extends SpringBootServletInitializer {
 			userRepository.save(owner);
 			return r;
 		}
-
 	}
 
 	@RequestMapping(value = "/file", method = RequestMethod.POST, consumes = "multipart/form-data")
