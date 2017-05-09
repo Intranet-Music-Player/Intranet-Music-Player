@@ -6,7 +6,7 @@
                  style="height: 25px; width: 25px"/></span> Song Name: <i><b>{{song.nameSong}}</b></i> Genere:
         <i><b>{{song.genere.genereName}}</b></i><br>
         <audio controls>
-          <source src="app/Tracks/{{song.nameSong}}.mp3" type="audio/mpeg">
+         <source src="http://localhost:8080/{{song.nameSong}}.mp3" type="audio/mpeg">
         </audio>
         <div class="dropdown">
           <button class="dropbtn"><span class="glyphicon glyphicon-option-vertical"></span></button>
@@ -17,7 +17,7 @@
           </div>
         </div>
       </li>
-      <li><button class="btn btn-default btn-danger" data-toggle="modal" data-target="#uploadSong">NEW SONG</button></li>
+      <li><button class="btn btn-default btn-success" data-toggle="modal" data-target="#uploadSong">UPLOAD NEW SONG</button></li>
     </ul>
   </div>
 

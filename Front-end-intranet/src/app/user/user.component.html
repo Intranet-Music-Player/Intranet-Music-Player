@@ -9,10 +9,10 @@
           <button type="button" class="btn btn-default btn-circle pull-right action-buttons" (click)="addNewPlaylist(newP.value)" style="width: 30%">ADD</button>
         </form>
       </li>
-      <li class="list-group-item" *ngFor="let playlist of playlists" (click)="onSelectPlaylist(playlist);">
+      <li class="list-group-item" *ngFor="let playlist of playlists" (click)="onSelectPlaylist(playlist)">
         <label style="width: 70%"> {{playlist.playlistName}} </label>
         <div class="pull-right action-buttons" style="width: 30%">
-          <button type="button" class="btn btn-danger btn-circle" (click)="removePlaylist()" style="width: 100%">REMOVE</button>
+          <button type="button" class="btn btn-danger btn-circle"  (click)="onSelectPlaylist(playlist)"  (click)="removePlaylist() "style="width: 100%">REMOVE</button>
         </div>
       </li>
     </ul>
@@ -23,7 +23,7 @@
       <li class="list-group-item" *ngFor="let song of selectedPlaylist?.songs">
         <label>{{song.nameSong }}</label>
         <audio controls>
-          <source src="app/tracks/{{song.nameSong}}.mp3" type="audio/mpeg">
+              <source src="http://localhost:8080/{{song.nameSong}}.mp3" type="audio/mpeg">
         </audio>
         <div class="pull-right action-buttons">
           <button type="button" class="btn btn-danger" (click)="removeSongPlaylist(selectedPlaylist?.playlistId,song.songId)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>

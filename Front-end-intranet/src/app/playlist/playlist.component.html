@@ -6,7 +6,7 @@
         <!-- hideme[playlist.playlistId] = ! hideme[playlist.playlistId]-->
         <label> {{playlist.playlistName}} </label>
         <div class="pull-right action-buttons">
-          <button type="button" class="btn btn-danger btn-circle" (click)="following()">FOLLOW</button>
+          <button type="button" class="btn btn-danger btn-circle" (click)="onSelectPlaylist(playlist)" (click)="following()">FOLLOW</button>
         </div>
       </li>
     </ul>
@@ -18,7 +18,7 @@
         <li style="color: black;" class="list-group-item" *ngFor="let song of selectedPlaylist?.songs">
           <label>{{song.nameSong }}</label>
           <audio controls>
-            <source src="app/tracks/{{song.nameSong}}.mp3" type="audio/mpeg">
+            <source src="http://localhost:8080/{{song.nameSong}}.mp3" type="audio/mpeg">
           </audio>
         </li>
       </ul>
