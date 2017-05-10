@@ -22,17 +22,20 @@
 
         <h6> {{selectedPlaylist?.playlistName | uppercase}}</h6>
         <ul>
-          <li style="color: black;" class="list-group-item" *ngFor="let song of selectedPlaylist?.songs">{{song.nameSong}}</li>
+          <li style="color: black;" class="list-group-item" *ngFor="let song of selectedPlaylist?.songs">
+            <h5>{{song.nameSong}}</h5>
+            <audio controls>
+              <source src="http://localhost:8080/{{song.nameSong}}.mp3" type="audio/mpeg">
+            </audio>
+          </li>
         </ul>
       </div>
       <div>
         <h6> {{selectedSong?.nameSong | uppercase}} </h6>
         <audio controls>
-          <source src="http://localhost:8080/{{song.nameSong}}.mp3" type="audio/mpeg">
+          <source src="http://localhost:8080/{{selectedSong?.nameSong}}.mp3" type="audio/mpeg">
         </audio>
       </div>
-
-
       <!--<h4>MASTER-DETAIL </h4>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos possimus beatae iste numquam aliquid ex sint
         temporibus enim, doloremque at vitae aspernatur nostrum perferendis ipsam praesentium sequi qui magni incidunt!</p>
