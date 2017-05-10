@@ -160,7 +160,7 @@ public class MainController extends SpringBootServletInitializer {
 	@RequestMapping(value = "/file", method = RequestMethod.POST, consumes = "multipart/form-data")
 	@ResponseBody
 	public Response uploadSong(@RequestPart("uploadFile") MultipartFile file,
-			@RequestPart("fileInfo") SongRequest songInfo) throws IOException{
+			@RequestPart("fileInfo") SongRequest songInfo) throws IOException {
 		System.out.println("-------------------------------");
 		System.out.println("1--" + file.getName());
 		System.out.println("2--" + file.getContentType());
@@ -190,8 +190,8 @@ public class MainController extends SpringBootServletInitializer {
 		InputStream inputStream = null;
 		OutputStream outputStream = null;
 		String fileName = file.getOriginalFilename();
-		File newFile = new File("resources/public/" + fileName);
-		//File newFile = new File("../Front-end-intranet/src/app/tracks/" + fileName);
+		File newFile = new File("src/main/resources/public/" + fileName);
+
 		try {
 			inputStream = file.getInputStream();
 			if (!newFile.exists()) {
@@ -225,6 +225,22 @@ public class MainController extends SpringBootServletInitializer {
 			playlistRepository.save(p);
 			r.setMessage("SONG ADDED TO PLAYLIST");
 		}
+		return r;
+	}
+
+	@RequestMapping(path = "/removeSong", method = RequestMethod.POST, produces = "Application/json", consumes = "Application/json")
+	public @ResponseBody Response removeSong(@RequestBody SongRequest remove) {
+		Response r = new Response();
+		Song s = songRepository.findOne(remove.getSongId());
+		Iterable<Playlist> playlists = listAllPlaylist();
+		for (Playlist p : playlists) {
+			if (p.getSongs().contains(s)) {
+				p.getSongs().remove(s);
+			}
+			playlistRepository.save(p);
+		}
+		songRepository.delete(s.getSongId());
+
 		return r;
 	}
 

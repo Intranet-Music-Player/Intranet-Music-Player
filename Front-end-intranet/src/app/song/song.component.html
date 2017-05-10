@@ -13,7 +13,7 @@
           <div class="dropdown-content">
             <a data-toggle="modal" data-target="#Valorate">Valorate</a>
             <a data-toggle="modal" data-target="#myModal" (click)="songId(song.songId)">Add to playlist</a>
-            <a (click)="deleteSong(song.songId)">Delete</a>
+            <a (click)="removeSong(song.songId)">Delete</a>
           </div>
         </div>
       </li>
@@ -45,7 +45,6 @@
                 <div class="input-group">
                   <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                   <select class="form-control" name="genereN" id="genereN" ngModel required>
-                  <option value="ELECTRONIC">ELECTRONIC</option>
                   <option value="HIP HOP">HIP HOP</option>
                   <option value="JAZZ">JAZZ</option>
                   <option value="LATINO">LATINO</option>

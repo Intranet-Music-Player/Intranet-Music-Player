@@ -50,6 +50,18 @@ export class SongComponent implements OnInit {
     console.log(this.songs);
   }
 
+  removeSong(songId : any){
+    console.log(songId);
+    var removeRequest : any = {
+      songId : songId
+    }
+    this.songService.removeSong(removeRequest).subscribe(
+      err => { console.log(err); }
+    );
+
+  }
+
+
   /*fileChange(event: any) {
     this.songService.fileChange(event);
   }*/

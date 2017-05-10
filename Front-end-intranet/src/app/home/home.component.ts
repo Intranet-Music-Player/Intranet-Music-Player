@@ -7,15 +7,15 @@ import { User } from 'app/entities/entities';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  private currentUser: User;
+  private currentUser: any;
   constructor(private router: Router) { }
 
   ngOnInit() {
+    this.currentUser=sessionStorage.getItem("currentUser");
   }
 
   logOut() {
     sessionStorage.removeItem("currentUser");
     this.router.navigate(['login']);
   }
-
 }

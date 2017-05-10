@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Http, Response, Headers, RequestOptions} from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { Song } from './../entities/entities';
@@ -12,9 +12,9 @@ export class SongService {
   private uploadUrl: string = 'http://localhost:8080/app/upload';
   private addSongToPlaylistUrl: string = 'http://localhost:8080/app/addSongToPlaylist';
 
- // constructor(private http: Http) { }
+  // constructor(private http: Http) { }
 
-  constructor (private http: Http) {
+  constructor(private http: Http) {
     /*this.progress$ = Observable.create(observer => {
       this.progressObserver = observer
     }).share();*/
@@ -27,7 +27,7 @@ export class SongService {
   }
 
   addNewSong(song: Song) {
-    return this.http.post(this.newSongUrl, JSON.stringify(song), {headers: getHeaders()})
+    return this.http.post(this.newSongUrl, JSON.stringify(song), { headers: getHeaders() })
       .map((response: Response) => {
         var res = response.json();
         if (res.message === "SONG ADDED") {
@@ -44,8 +44,13 @@ export class SongService {
       .map((response: Response) => response.json())
       .catch(handleError);
   }
+  removeSong(removeRequest: any): Observable<any> {
+    return this.http.post("http://localhost:8080/app/removeSong", JSON.stringify(removeRequest), { headers: getHeaders() })
+      .map((response: Response) => response.json())
+      .catch(handleError);
+  }
 
-  makeFileRequest (url: string, params: string[], files: File[]): Observable<any> {
+  makeFileRequest(url: string, params: string[], files: File[]): Observable<any> {
     return Observable.create(observer => {
       let formData: FormData = new FormData(),
         xhr: XMLHttpRequest = new XMLHttpRequest();
