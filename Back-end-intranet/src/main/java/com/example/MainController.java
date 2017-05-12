@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.example.entities.*;
 import com.example.repository.*;
@@ -154,7 +153,6 @@ public class MainController extends SpringBootServletInitializer {
 			userRepository.save(owner);
 			return r;
 		}
-
 	}
 
 	@RequestMapping(value = "/file", method = RequestMethod.POST, consumes = "multipart/form-data")

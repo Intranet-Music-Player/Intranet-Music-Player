@@ -7,6 +7,7 @@
 
         <div class="navbar-header">
 
+        <div class="navbar-header">
             <a routerLink="/home/user" class="navbar-brand">
                 <span class="visible-xs">MUSIC</span>
                 <span class="hidden-xs">MUSIC PLAYER</span>
@@ -16,6 +17,7 @@
                     <i class="fa fa-bars"></i>
                 </a>
             </p>
+        </div>
         </div>
         <div class="navbar-collapse collapse" id="navbar-collapse-main">
             <ul class="nav navbar-nav navbar-right">
@@ -48,69 +50,3 @@
         <router-outlet></router-outlet>
     </section>
 </article>
-
-
-
-<!--REMEMBER ME + LOSE YOURSELF-->
-<!--
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header col-sm-2">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar"></button>
-            <a class="navbar-brand" routerLink="/home">MUSIC PLAYER 27/03</a>
-        </div>
-        <div class="col-sm-8 col-sm-offset-2 ">
-            <div class="input-group">
-                <div class="input-group-btn search-panel">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    	<span id="search_concept">Filter by</span> <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a (click)="value=GENRERE">GENRES</a></li>
-                        <li><a href="#its_equal">BAND</a></li>
-                        <li><a href="#greather_than">SONG NAME</a></li>
-                    </ul>
-                </div>
-                <input type="hidden" name="search_param" value="all" id="search_param">
-                <input type="text" class="form-control" name="x" placeholder="Search term...">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                </span>
-            </div>
-        </div>
-    </div>
-</nav>
-
-<div class="container-fluid" >
-    <div class="row content">
-        <div class="col-sm-2 sidenav">
-            <div class="card hovercard">
-                <div class="avatar">
-                    <a routerLink="/home"><img alt="" src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQCR9JHd5eJOkuA_UXuBd6gNvfY6BouLktZL0E5y6kLKJKTRqTcE5MLG64">{{currentUser.username}}
-                    </a>
-                </div>
-            </div>
-            <button class="btn btn-default col-lg-12" disabled style="height: 100%; width: 100%;">MENU</button><br>
-            <a routerLink="/home/user"><button class="btn btn-default col-lg-12" style="height: 100%; width: 100%;">HOME</button></a><br>
-            <a routerLink="/home/playlists"><button class="btn btn-default col-lg-12" style="height: 100%; width: 100%;">PLAYLISTS</button></a><br>
-            <a routerLink="/home/genres"><button class="btn btn-default col-lg-12" style="height: 100%; width: 100%;">GENRES</button></a><br>
-            <a routerLink="/home/songs"><button class="btn btn-default col-lg-12" style="height: 100%; width: 100%;">SONGS</button></a><br>
-            <button class="btn btn-default col-lg-12" style="height: 100%; width: 100%;" (click)="logOut()">LOG OUT</button>
-        </div>
-        <div class="col-sm-8">
-            <router-outlet></router-outlet>
-        </div>
-        <div class="col-sm-2 sidenav">
-            <div class="well">
-                <p>MOST VALORATED SONGS</p>
-            </div>
-            <div class="well">
-                <p>MOST FOLLOWED PLAYLISTS</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<footer class="container-fluid text-center" style="background-color: #222; color: whitesmoke ; height: 50px">
-    <p>FOOTER OF THE PAGE</p>
-</footer>-->
