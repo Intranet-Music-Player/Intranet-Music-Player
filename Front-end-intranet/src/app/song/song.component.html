@@ -6,7 +6,7 @@
                  style="height: 25px; width: 25px"/></span> Song Name: <i><b>{{song.nameSong}}</b></i> Genere:
         <i><b>{{song.genere.genereName}}</b></i><br>
         <audio controls>
-         <source src="http://localhost:8080/{{song.nameSong}}.mp3" type="audio/mpeg">
+          <source src="http://localhost:8080/{{song.nameSong}}.mp3" type="audio/mpeg">
         </audio>
         <div class="dropdown">
           <button class="dropbtn"><span class="glyphicon glyphicon-option-vertical"></span></button>
@@ -43,15 +43,10 @@
                 <label for="genereN" class="cols-sm-2 control-label">Genere
             </label>
                 <div class="input-group">
+
                   <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                  <select class="form-control" name="genereN" id="genereN" ngModel required>
-                  <option value="HIP HOP">HIP HOP</option>
-                  <option value="JAZZ">JAZZ</option>
-                  <option value="LATINO">LATINO</option>
-                  <option value="PUNK">PUNK</option>
-                  <option value="R & B">R & B</option>
-                  <option value="REGGAE">REGGAE</option>
-                  <option value="ROCK">ROCK</option>
+                  <select class="form-control" name="genereN" id="genereN" ngModel required>              
+                  <option *ngFor="let genere of generes" value="{{genere.genereName}}">{{genere.genereName}}</option>
                 </select>
                 </div>
               </div>

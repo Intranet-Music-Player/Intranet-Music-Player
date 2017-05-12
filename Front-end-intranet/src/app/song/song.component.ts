@@ -1,6 +1,7 @@
-import {Component, OnInit, NgModule, ViewContainerRef, ViewChild} from '@angular/core';
-import { Playlist, Song } from './../entities/entities';
+import { Component, OnInit, NgModule, ViewContainerRef, ViewChild } from '@angular/core';
+import { Playlist, Song, Genres } from './../entities/entities';
 import { SongService } from './../services/song.service';
+import { GenresService } from './../services/genres.service';
 import { Overlay } from 'angular2-modal';
 import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { PlaylistComponent } from 'app/playlist/playlist.component';
@@ -18,17 +19,19 @@ export class SongComponent implements OnInit {
   file: File;
   namef: string;
   songs: Song[];
+  generes: Genres[];
   playlists: any[];
   songIdVal: any;
   addMessage: any;
 
   starsCount: number = 5;
   starsCounts: number[] = [];
-  constructor(private songService: SongService, overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal, private http: Http) {
+  constructor(private songService: SongService, private genereService : GenresService , overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal, private http: Http) {
     overlay.defaultViewContainer = vcRef;
   }
   ngOnInit() {
     this.loadSongs();
+    this.loadGenres();
     this.playlists = JSON.parse(sessionStorage.getItem("currentUser")).playlists;
   }
   onChange(event: EventTarget) {
@@ -47,13 +50,17 @@ export class SongComponent implements OnInit {
     this.songService.getSongs().subscribe(
       songs => this.songs = songs,
       err => { console.log(err) });
-    console.log(this.songs);
+  }
+  loadGenres(){
+    this.genereService.getGenres().subscribe(
+      generes => this.generes = generes,
+      err => { console.log(err) });
   }
 
-  removeSong(songId : any){
+  removeSong(songId: any) {
     console.log(songId);
-    var removeRequest : any = {
-      songId : songId
+    var removeRequest: any = {
+      songId: songId
     }
     this.songService.removeSong(removeRequest).subscribe(
       err => { console.log(err); }
